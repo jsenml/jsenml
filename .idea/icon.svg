@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 400 400">
+    <rect width="100%" height="100%" fill="#0f4c5c" rx="24%" ry="24%"/>
+    <g fill="none" stroke="#f4e9d5" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+        <!-- pack: JSON array brackets -->
+        <path d="M118,92 L78,92 L78,308 L118,308"/>
+        <path d="M282,92 L322,92 L322,308 L282,308"/>
+        <!-- measurements: sensor pulse -->
+        <path d="M118,212 L150,212 L176,140 L214,268 L240,188 L282,188"/>
+    </g>
+</svg>
