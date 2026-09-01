@@ -7,6 +7,12 @@ plugins {
     alias(libs.plugins.spotless)
 }
 
+dependencies {
+    nmcpAggregation(project(":jsenml-api"))
+
+    kover(project(":jsenml-api"))
+}
+
 nmcpAggregation {
     centralPortal {
         username = System.getenv("PUBLISHING_USERNAME")

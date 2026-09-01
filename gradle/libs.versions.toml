@@ -1,8 +1,11 @@
 [versions]
+errorprone = "2.50.0"
 errorprone-plugin = "5.1.1"
+jspecify = "1.0.1"
 kotlin = "2.4.0"
 kover = "0.9.9"
 nmcp = "1.6.1"
+nullaway = "0.14.0"
 nullmarked = "1.0.0"
 spotless = "8.10.1"
 
@@ -16,3 +19,6 @@ nullmarked = { id = "io.github.malczuuu.nullmarked", version.ref = "nullmarked" 
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
