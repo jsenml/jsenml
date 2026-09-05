@@ -19,7 +19,7 @@ package io.github.jsenml;
 import java.io.Serial;
 import org.jspecify.annotations.Nullable;
 
-/** Thrown when a {@code SenmlPack} cannot be encoded or decoded by a SenML codec. */
+/** Thrown when a {@link SenmlPack} cannot be encoded or decoded by a SenML codec. */
 public class SenmlCodecException extends SenmlException {
 
   @Serial //

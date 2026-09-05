@@ -17,7 +17,7 @@
 package io.github.jsenml;
 
 /**
- * Immutable description of a single SenML rule broken by a record within a {@code SenmlPack}.
+ * Immutable description of a single SenML rule broken by a record within a {@link SenmlPack}.
  *
  * @see SenmlViolationException#getViolations()
  */

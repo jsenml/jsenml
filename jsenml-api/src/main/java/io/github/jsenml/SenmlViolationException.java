@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Thrown when a {@code SenmlPack} violates SenML rules, for example during {@code
+ * Thrown when a {@link SenmlPack} violates SenML rules, for example during {@link
  * SenmlPack#resolve()}.
  *
  * <p>Validation does not stop at the first problem; all violations found are available via {@link

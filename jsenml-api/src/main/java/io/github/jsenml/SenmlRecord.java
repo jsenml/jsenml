@@ -22,12 +22,12 @@ import org.jspecify.annotations.Nullable;
  * Immutable SenML Record, as defined in <a href="https://www.rfc-editor.org/rfc/rfc8428#section-4">
  * RFC 8428, Section 4</a>.
  *
- * <p>A record holds base fields (applying to this and all following records within a {@code
+ * <p>A record holds base fields (applying to this and all following records within a {@link
  * SenmlPack}) and regular fields (applying to this record only). Every field is optional. Numeric
  * fields must be finite.
  *
  * <p>Records are not validated against cross-field SenML rules (e.g. a single value field per
- * record) on construction, so that any wire-level pack can be represented as-is. Use {@code
+ * record) on construction, so that any wire-level pack can be represented as-is. Use {@link
  * SenmlPack#resolve()} to obtain validated, resolved records.
  *
  * <p>Use {@link #builder()} to create instances and {@link #toBuilder()} to derive modified copies.
