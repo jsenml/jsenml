@@ -3,6 +3,7 @@ plugins {
     id("internal.kover-convention")
     id("internal.java-library-convention")
     id("internal.publishing-convention")
+    id("java-test-fixtures")
     alias(libs.plugins.nmcp)
 }
 
@@ -15,6 +16,10 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
+
+    // Test Fixtures (shared SenmlJsonCodec contract tests for backend modules)
+    testFixturesApi(libs.junit.jupiter)
+    testFixturesApi(libs.assertj.core)
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
@@ -29,3 +34,8 @@ internalBuild {
 tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.add("-Xlint:-module")
 }
+
+// Test fixtures are consumed by backend modules only and are not published.
+val javaComponent = components["java"] as AdhocComponentWithVariants
+javaComponent.withVariantsFromConfiguration(configurations["testFixturesApiElements"]) { skip() }
+javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
