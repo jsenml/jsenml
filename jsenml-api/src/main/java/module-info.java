@@ -32,4 +32,6 @@ module io.github.jsenml {
   requires static transitive org.jspecify;
 
   exports io.github.jsenml;
+  exports io.github.jsenml.internal to
+      io.github.jsenml.json;
 }

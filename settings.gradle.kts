@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 rootProject.name = "jsenml"
 
 include(":jsenml-api")
+include(":jsenml-json")

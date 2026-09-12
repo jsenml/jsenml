@@ -9,8 +9,10 @@ plugins {
 
 dependencies {
     nmcpAggregation(project(":jsenml-api"))
+    nmcpAggregation(project(":jsenml-json"))
 
     kover(project(":jsenml-api"))
+    kover(project(":jsenml-json"))
 }
 
 nmcpAggregation {
