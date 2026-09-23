@@ -33,5 +33,6 @@ module io.github.jsenml {
 
   exports io.github.jsenml;
   exports io.github.jsenml.internal to
-      io.github.jsenml.json;
+      io.github.jsenml.json,
+      io.github.jsenml.cbor;
 }
