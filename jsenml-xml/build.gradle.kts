@@ -10,6 +10,12 @@ dependencies {
     // Main
     api(project(":jsenml-api"))
 
+    // Test
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
+
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
 }
