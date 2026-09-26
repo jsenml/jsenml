@@ -20,6 +20,7 @@ import org.jspecify.annotations.NullMarked;
 /**
  * Jackson 3 backend for JSenML, SenML (RFC 8428) library for Java.
  *
+ * @see io.github.jsenml.json.jackson.JacksonSenmlJsonCodec
  * @see SenmlJsonJacksonModule
  */
 @NullMarked
@@ -30,6 +31,8 @@ module io.github.jsenml.json.jackson {
 
   exports io.github.jsenml.json.jackson;
 
+  provides io.github.jsenml.json.spi.SenmlJsonCodecProvider with
+      io.github.jsenml.json.jackson.JacksonSenmlJsonCodecProvider;
   provides tools.jackson.databind.JacksonModule with
       SenmlJsonJacksonModule;
 }
