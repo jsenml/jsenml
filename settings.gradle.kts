@@ -22,3 +22,4 @@ rootProject.name = "jsenml"
 include(":jsenml-api")
 include(":jsenml-json")
 include(":jsenml-cbor")
+include(":jsenml-xml")
