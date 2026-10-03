@@ -19,6 +19,7 @@ import org.jspecify.annotations.NullMarked;
 /**
  * Jackson 3 CBOR backend for JSenML, SenML (RFC 8428) library for Java.
  *
+ * @see io.github.jsenml.cbor.jackson.JacksonSenmlCborCodec
  * @see io.github.jsenml.cbor.jackson.SenmlCborJacksonModule
  */
 @NullMarked
@@ -28,4 +29,7 @@ module io.github.jsenml.cbor.jackson {
   requires transitive tools.jackson.dataformat.cbor;
 
   exports io.github.jsenml.cbor.jackson;
+
+  provides io.github.jsenml.cbor.spi.SenmlCborCodecProvider with
+      io.github.jsenml.cbor.jackson.JacksonSenmlCborCodecProvider;
 }
