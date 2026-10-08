@@ -19,6 +19,7 @@ import org.jspecify.annotations.NullMarked;
 /**
  * Jackson 3 XML backend for JSenML, SenML (RFC 8428) library for Java.
  *
+ * @see io.github.jsenml.xml.jackson.JacksonSenmlXmlCodec
  * @see io.github.jsenml.xml.jackson.SenmlXmlJacksonModule
  */
 @NullMarked
@@ -29,4 +30,7 @@ module io.github.jsenml.xml.jackson {
   requires transitive tools.jackson.dataformat.xml;
 
   exports io.github.jsenml.xml.jackson;
+
+  provides io.github.jsenml.xml.spi.SenmlXmlCodecProvider with
+      io.github.jsenml.xml.jackson.JacksonSenmlXmlCodecProvider;
 }
