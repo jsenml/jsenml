@@ -11,6 +11,13 @@ dependencies {
     api(project(":jsenml-xml"))
     api(libs.jackson.dataformat.xml)
 
+    // Test
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
+    testImplementation(testFixtures(project(":jsenml-xml")))
+
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
 }
