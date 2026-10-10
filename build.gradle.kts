@@ -15,6 +15,7 @@ dependencies {
     nmcpAggregation(project(":jsenml-cbor-jackson"))
     nmcpAggregation(project(":jsenml-json-jackson"))
     nmcpAggregation(project(":jsenml-xml-jackson"))
+    nmcpAggregation(project(":jsenml-json-jackson2"))
 
     kover(project(":jsenml-api"))
     kover(project(":jsenml-cbor"))
@@ -23,6 +24,7 @@ dependencies {
     kover(project(":jsenml-cbor-jackson"))
     kover(project(":jsenml-json-jackson"))
     kover(project(":jsenml-xml-jackson"))
+    kover(project(":jsenml-json-jackson2"))
 }
 
 nmcpAggregation {
