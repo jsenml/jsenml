@@ -11,6 +11,13 @@ dependencies {
     api(project(":jsenml-cbor"))
     api(libs.jackson2.dataformat.cbor)
 
+    // Test
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
+    testImplementation(testFixtures(project(":jsenml-cbor")))
+
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
 }
