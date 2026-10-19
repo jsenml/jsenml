@@ -19,6 +19,7 @@ import org.jspecify.annotations.NullMarked;
 /**
  * Gson backend for JSenML, SenML (RFC 8428) library for Java.
  *
+ * @see io.github.jsenml.json.gson.GsonSenmlJsonCodec
  * @see io.github.jsenml.json.gson.SenmlTypeAdapterFactory
  */
 @NullMarked
@@ -28,4 +29,7 @@ module io.github.jsenml.json.gson {
   requires transitive io.github.jsenml.json;
 
   exports io.github.jsenml.json.gson;
+
+  provides io.github.jsenml.json.spi.SenmlJsonCodecProvider with
+      io.github.jsenml.json.gson.GsonSenmlJsonCodecProvider;
 }
