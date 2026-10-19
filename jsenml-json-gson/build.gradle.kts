@@ -11,6 +11,13 @@ dependencies {
     api(project(":jsenml-json"))
     api(libs.gson)
 
+    // Test
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
+    testImplementation(testFixtures(project(":jsenml-json")))
+
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
 }
