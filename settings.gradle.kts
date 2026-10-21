@@ -19,6 +19,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "jsenml"
 
+include(":jsenml-bom")
 include(":jsenml-api")
 include(":jsenml-json")
 include(":jsenml-cbor")

@@ -8,6 +8,7 @@ plugins {
 }
 
 dependencies {
+    nmcpAggregation(project(":jsenml-bom"))
     nmcpAggregation(project(":jsenml-api"))
     nmcpAggregation(project(":jsenml-cbor"))
     nmcpAggregation(project(":jsenml-json"))
