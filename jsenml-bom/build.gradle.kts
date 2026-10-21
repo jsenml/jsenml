@@ -9,6 +9,7 @@ dependencies {
         api(project(":jsenml-api"))
         api(project(":jsenml-cbor"))
         api(project(":jsenml-json"))
+        api(project(":jsenml-kotlin"))
         api(project(":jsenml-xml"))
 
         api(project(":jsenml-json-gson"))
