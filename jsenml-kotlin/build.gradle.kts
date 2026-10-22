@@ -9,6 +9,13 @@ dependencies {
     // Main
     api(project(":jsenml-api"))
     compileOnly(kotlin("stdlib"))
+
+    // Test
+    testImplementation(kotlin("stdlib"))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
 }
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
