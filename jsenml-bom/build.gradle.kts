@@ -6,21 +6,21 @@ plugins {
 
 dependencies {
     constraints {
-        api(project(":jsenml-api"))
-        api(project(":jsenml-cbor"))
-        api(project(":jsenml-json"))
-        api(project(":jsenml-kotlin"))
-        api(project(":jsenml-xml"))
+        api(project(":jsenml-core:jsenml-api"))
+        api(project(":jsenml-core:jsenml-cbor"))
+        api(project(":jsenml-core:jsenml-json"))
+        api(project(":jsenml-core:jsenml-kotlin"))
+        api(project(":jsenml-core:jsenml-xml"))
 
-        api(project(":jsenml-json-gson"))
+        api(project(":jsenml-gson:jsenml-json-gson"))
 
-        api(project(":jsenml-cbor-jackson"))
-        api(project(":jsenml-json-jackson"))
-        api(project(":jsenml-xml-jackson"))
+        api(project(":jsenml-jackson:jsenml-cbor-jackson"))
+        api(project(":jsenml-jackson:jsenml-json-jackson"))
+        api(project(":jsenml-jackson:jsenml-xml-jackson"))
 
-        api(project(":jsenml-cbor-jackson2"))
-        api(project(":jsenml-json-jackson2"))
-        api(project(":jsenml-xml-jackson2"))
+        api(project(":jsenml-jackson2:jsenml-cbor-jackson2"))
+        api(project(":jsenml-jackson2:jsenml-json-jackson2"))
+        api(project(":jsenml-jackson2:jsenml-xml-jackson2"))
     }
 }
 

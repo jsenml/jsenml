@@ -8,15 +8,15 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-json"))
-    api(libs.jackson.databind)
+    api(project(":jsenml-core:jsenml-json"))
+    api(libs.gson)
 
     // Test
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
-    testImplementation(testFixtures(project(":jsenml-json")))
+    testImplementation(testFixtures(project(":jsenml-core:jsenml-json")))
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
@@ -24,6 +24,6 @@ dependencies {
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalBuild {
-    displayName = "JSenML JSON Jackson"
-    description = "Jackson 3 JSON backend for JSenML, SenML (RFC 8428) library for Java"
+    displayName = "JSenML JSON Gson"
+    description = "Gson JSON backend for JSenML, SenML (RFC 8428) library for Java"
 }

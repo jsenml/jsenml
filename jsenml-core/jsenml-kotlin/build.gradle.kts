@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-api"))
+    api(project(":jsenml-core:jsenml-api"))
     compileOnly(kotlin("stdlib"))
 
     // Test

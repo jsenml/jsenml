@@ -8,15 +8,15 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-xml"))
-    api(libs.jackson.dataformat.xml)
+    api(project(":jsenml-core:jsenml-xml"))
+    api(libs.jackson2.dataformat.xml)
 
     // Test
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
-    testImplementation(testFixtures(project(":jsenml-xml")))
+    testImplementation(testFixtures(project(":jsenml-core:jsenml-xml")))
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
@@ -24,6 +24,6 @@ dependencies {
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalBuild {
-    displayName = "JSenML XML Jackson"
-    description = "Jackson 3 XML backend for JSenML, SenML (RFC 8428) library for Java"
+    displayName = "JSenML XML Jackson 2"
+    description = "Jackson 2 XML backend for JSenML, SenML (RFC 8428) library for Java"
 }

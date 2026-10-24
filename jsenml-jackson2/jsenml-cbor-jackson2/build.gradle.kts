@@ -8,15 +8,15 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-cbor"))
-    api(libs.jackson.dataformat.cbor)
+    api(project(":jsenml-core:jsenml-cbor"))
+    api(libs.jackson2.dataformat.cbor)
 
     // Test
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
-    testImplementation(testFixtures(project(":jsenml-cbor")))
+    testImplementation(testFixtures(project(":jsenml-core:jsenml-cbor")))
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
@@ -24,6 +24,6 @@ dependencies {
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalBuild {
-    displayName = "JSenML CBOR Jackson"
-    description = "Jackson 3 CBOR backend for JSenML, SenML (RFC 8428) library for Java"
+    displayName = "JSenML CBOR Jackson 2"
+    description = "Jackson 2 CBOR backend for JSenML, SenML (RFC 8428) library for Java"
 }

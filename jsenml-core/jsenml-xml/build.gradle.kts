@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-api"))
+    api(project(":jsenml-core:jsenml-api"))
 
     // Test
     testImplementation(libs.junit.jupiter)
@@ -17,8 +17,8 @@ dependencies {
 
     testImplementation(libs.assertj.core)
 
-    // Test Fixtures (shared SenmlJsonCodec contract tests for backend modules)
-    testFixturesApi(testFixtures(project(":jsenml-api")))
+    // Test Fixtures (shared SenmlXmlCodec contract tests for backend modules)
+    testFixturesApi(testFixtures(project(":jsenml-core:jsenml-api")))
     testFixturesApi(libs.junit.jupiter)
     testFixturesApi(libs.assertj.core)
 
@@ -28,8 +28,8 @@ dependencies {
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalBuild {
-    displayName = "JSenML JSON"
-    description = "SenML JSON (application/senml+json) codec API and SPI of JSenML, SenML (RFC 8428) library for Java"
+    displayName = "JSenML XML"
+    description = "SenML XML (application/senml+xml) codec API and SPI of JSenML, SenML (RFC 8428) library for Java"
 }
 
 // Test fixtures are consumed by backend modules only and are not published.

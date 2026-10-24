@@ -8,7 +8,7 @@ plugins {
 
 dependencies {
     // Main
-    api(project(":jsenml-json"))
+    api(project(":jsenml-core:jsenml-json"))
     api(libs.jackson2.databind)
 
     // Test
@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
-    testImplementation(testFixtures(project(":jsenml-json")))
+    testImplementation(testFixtures(project(":jsenml-core:jsenml-json")))
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
