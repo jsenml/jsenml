@@ -21,6 +21,15 @@ dependencies {
     annotationProcessor(libs.spring.boot.autoconfigure.processor)
     annotationProcessor(libs.spring.boot.configuration.processor)
 
+    // Test
+    testImplementation(project(":jsenml-jackson:jsenml-cbor-jackson"))
+    testImplementation(project(":jsenml-jackson:jsenml-json-jackson"))
+    testImplementation(project(":jsenml-jackson:jsenml-xml-jackson"))
+
+    testImplementation(libs.spring.boot.starter.webmvc.test)
+    testImplementation(libs.spring.boot.jackson)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
 }
