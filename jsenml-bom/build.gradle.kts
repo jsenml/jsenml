@@ -21,6 +21,8 @@ dependencies {
         api(project(":jsenml-jackson2:jsenml-cbor-jackson2"))
         api(project(":jsenml-jackson2:jsenml-json-jackson2"))
         api(project(":jsenml-jackson2:jsenml-xml-jackson2"))
+
+        api(project(":jsenml-spring-boot:jsenml-spring-boot-autoconfigure"))
     }
 }
 

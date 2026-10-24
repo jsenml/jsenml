@@ -12,6 +12,7 @@ junit = "6.1.2"
 nmcp = "1.6.1"
 nullaway = "0.14.0"
 nullmarked = "1.0.0"
+spring-boot = "4.1.1"
 spotless = "8.10.1"
 
 [plugins]
@@ -37,3 +38,9 @@ jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+
+# spring-boot modules
+spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot" }
+spring-boot-autoconfigure-processor = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot" }
+spring-boot-jackson = { module = "org.springframework.boot:spring-boot-jackson", version.ref = "spring-boot" }
