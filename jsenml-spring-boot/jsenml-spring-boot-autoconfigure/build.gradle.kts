@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.spring.boot.autoconfigure)
     compileOnly(libs.spring.boot.gson)
     compileOnly(libs.spring.boot.jackson)
+    compileOnly(libs.springdoc.openapi.starter.common)
 
     annotationProcessor(libs.spring.boot.autoconfigure.processor)
     annotationProcessor(libs.spring.boot.configuration.processor)
