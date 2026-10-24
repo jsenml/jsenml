@@ -11,11 +11,13 @@ dependencies {
     api(project(":jsenml-core:jsenml-api"))
     api(project(":jsenml-core:jsenml-kotlin"))
 
+    compileOnly(project(":jsenml-gson:jsenml-json-gson"))
     compileOnly(project(":jsenml-jackson:jsenml-cbor-jackson"))
     compileOnly(project(":jsenml-jackson:jsenml-json-jackson"))
     compileOnly(project(":jsenml-jackson:jsenml-xml-jackson"))
 
     compileOnly(libs.spring.boot.autoconfigure)
+    compileOnly(libs.spring.boot.gson)
     compileOnly(libs.spring.boot.jackson)
 
     annotationProcessor(libs.spring.boot.autoconfigure.processor)

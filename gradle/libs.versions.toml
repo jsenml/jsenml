@@ -43,5 +43,6 @@ nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot" }
 spring-boot-autoconfigure-processor = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot" }
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot" }
+spring-boot-gson = { module = "org.springframework.boot:spring-boot-gson", version.ref = "spring-boot" }
 spring-boot-jackson = { module = "org.springframework.boot:spring-boot-jackson", version.ref = "spring-boot" }
 spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test", version.ref = "spring-boot" }

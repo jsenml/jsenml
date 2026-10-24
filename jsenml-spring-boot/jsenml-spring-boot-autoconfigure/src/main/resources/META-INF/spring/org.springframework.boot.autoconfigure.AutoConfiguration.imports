@@ -1,1 +1,2 @@
+io.github.jsenml.spring.boot.autoconfigure.gson.SenmlGsonAutoConfiguration
 io.github.jsenml.spring.boot.autoconfigure.jackson.SenmlJacksonAutoConfiguration
