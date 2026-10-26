@@ -46,6 +46,7 @@ spring-boot-autoconfigure-processor = { module = "org.springframework.boot:sprin
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot" }
 spring-boot-gson = { module = "org.springframework.boot:spring-boot-gson", version.ref = "spring-boot" }
 spring-boot-jackson = { module = "org.springframework.boot:spring-boot-jackson", version.ref = "spring-boot" }
+spring-boot-starter-jackson = { module = "org.springframework.boot:spring-boot-starter-jackson", version.ref = "spring-boot" }
 spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test", version.ref = "spring-boot" }
 
 # springdoc modules

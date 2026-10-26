@@ -22,6 +22,7 @@ dependencies {
     nmcpAggregation(project(":jsenml-jackson2:jsenml-json-jackson2"))
     nmcpAggregation(project(":jsenml-jackson2:jsenml-xml-jackson2"))
     nmcpAggregation(project(":jsenml-spring-boot:jsenml-spring-boot-autoconfigure"))
+    nmcpAggregation(project(":jsenml-spring-boot:jsenml-spring-boot-starter"))
 
     kover(project(":jsenml-core:jsenml-api"))
     kover(project(":jsenml-core:jsenml-cbor"))
