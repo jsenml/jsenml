@@ -18,6 +18,7 @@ dependencies {
 
     compileOnly(libs.spring.boot.autoconfigure)
     compileOnly(libs.spring.boot.gson)
+    compileOnly(libs.spring.boot.http.converter)
     compileOnly(libs.spring.boot.jackson)
     compileOnly(libs.springdoc.openapi.starter.common)
 
