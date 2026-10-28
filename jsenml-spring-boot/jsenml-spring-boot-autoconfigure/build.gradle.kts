@@ -35,6 +35,7 @@ dependencies {
     testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation(libs.spring.boot.gson)
     testImplementation(libs.spring.boot.jackson)
+    testImplementation(libs.spring.boot.restclient.test)
     testImplementation(libs.springdoc.openapi.starter.webmvc.api)
     testRuntimeOnly(libs.junit.platform.launcher)
 
