@@ -31,6 +31,7 @@ dependencies {
     testImplementation(project(":jsenml-jackson:jsenml-json-jackson"))
     testImplementation(project(":jsenml-jackson:jsenml-xml-jackson"))
 
+    testImplementation(libs.spring.boot.starter.webflux.test)
     testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation(libs.spring.boot.gson)
     testImplementation(libs.spring.boot.jackson)
