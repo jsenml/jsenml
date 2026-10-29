@@ -24,6 +24,11 @@ idea {
                     taskNames = listOf("spotlessApply")
                     projectPath = rootProject.rootDir.absolutePath
                 }
+                create<Application>("Run [example-webmvc]") {
+                    mainClass = "com.example.webmvc.WebMvcApplicationKt"
+                    moduleName = "jsenml.examples.example-webmvc.main"
+                    workingDirectory = rootProject.rootDir.absolutePath
+                }
                 create<JUnit>("JUnit [jsenml-api]") {
                     moduleName = "jsenml.jsenml-core.jsenml-api.test"
                     workingDirectory = rootProject.rootDir.absolutePath
