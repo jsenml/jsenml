@@ -8,6 +8,7 @@ jackson = "3.2.2"
 jackson2 = "2.22.3"
 jspecify = "1.0.1"
 kotlin = "2.4.0"
+kotlinx-coroutines = "1.10.2"
 kover = "0.9.9"
 junit = "6.1.2"
 nmcp = "1.6.1"
@@ -42,6 +43,7 @@ jackson2-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-d
 jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 
 # spring-boot modules
@@ -53,11 +55,13 @@ spring-boot-http-converter = { module = "org.springframework.boot:spring-boot-ht
 spring-boot-jackson = { module = "org.springframework.boot:spring-boot-jackson", version.ref = "spring-boot" }
 spring-boot-restclient-test = { module = "org.springframework.boot:spring-boot-restclient-test", version.ref = "spring-boot" }
 spring-boot-starter-jackson = { module = "org.springframework.boot:spring-boot-starter-jackson", version.ref = "spring-boot" }
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux", version.ref = "spring-boot" }
 spring-boot-starter-webflux-test = { module = "org.springframework.boot:spring-boot-starter-webflux-test", version.ref = "spring-boot" }
 spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc", version.ref = "spring-boot" }
 spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test", version.ref = "spring-boot" }
 
 # springdoc modules
 springdoc-openapi-starter-common = { module = "org.springdoc:springdoc-openapi-starter-common", version.ref = "springdoc" }
+springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "springdoc" }
 springdoc-openapi-starter-webmvc-api = { module = "org.springdoc:springdoc-openapi-starter-webmvc-api", version.ref = "springdoc" }
 springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }

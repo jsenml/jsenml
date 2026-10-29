@@ -24,6 +24,11 @@ idea {
                     taskNames = listOf("spotlessApply")
                     projectPath = rootProject.rootDir.absolutePath
                 }
+                create<Application>("Run [example-webflux]") {
+                    mainClass = "com.example.webflux.WebFluxApplicationKt"
+                    moduleName = "jsenml.examples.example-webflux.main"
+                    workingDirectory = rootProject.rootDir.absolutePath
+                }
                 create<Application>("Run [example-webmvc]") {
                     mainClass = "com.example.webmvc.WebMvcApplicationKt"
                     moduleName = "jsenml.examples.example-webmvc.main"
