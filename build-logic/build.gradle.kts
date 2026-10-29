@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     implementation(plugin(libs.plugins.errorprone))
+    implementation(plugin(libs.plugins.idea.ext))
     implementation(plugin(libs.plugins.kotlin.jvm))
     implementation(plugin(libs.plugins.kover))
     implementation(plugin(libs.plugins.nullmarked))

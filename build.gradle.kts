@@ -1,6 +1,7 @@
 import com.diffplug.spotless.LineEnding
 
 plugins {
+    id("internal.idea-convention")
     alias(libs.plugins.kover)
     alias(libs.plugins.nmcp) apply false
     alias(libs.plugins.nmcp.aggregation)

@@ -3,6 +3,7 @@ assertj = "3.27.7"
 errorprone = "2.50.0"
 errorprone-plugin = "5.1.1"
 gson = "2.14.0"
+idea-ext = "1.4.1"
 jackson = "3.2.2"
 jackson2 = "2.22.3"
 jspecify = "1.0.1"
@@ -18,6 +19,7 @@ springdoc = "3.1.1"
 
 [plugins]
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
+idea-ext = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "idea-ext" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 nmcp = { id = "com.gradleup.nmcp", version.ref = "nmcp" }
