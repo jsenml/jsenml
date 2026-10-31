@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+      - "release-*"
+    paths:
+      - ".github/workflows/ci.yml"
+      - "build-logic/**"
+      - "gradle/**"
+      - "**/src/**"
+      - "**/*.gradle.kts"
+      - "gradle.properties"
+      - "gradlew"
+      - "gradlew.bat"
+  pull_request:
+    branches:
+      - "main"
+      - "release-*"
+  schedule:
+    - cron: "0 3 * * 0"  # Weekly on Sundays at 3 AM UTC
+
+concurrency:
+  # Only pull request runs share a group, so a new push cancels the previous build of the same PR. Every other run -
+  # pushes, schedule and manual - gets a unique group and is never canceled.
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [17, 21, 25]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Java ${{ matrix.java }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: "${{ matrix.java }}"
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-disabled: "true"
+
+      - name: Cache Gradle
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ci-${{ runner.os }}-java-${{ matrix.java }}-${{ hashFiles('**/gradle-wrapper.properties', '**/libs.versions.toml') }}
+          restore-keys: |
+            ci-${{ runner.os }}-java-${{ matrix.java }}-
+
+      - name: Gradle Build
+        env:
+          GRADLE_OPTS: >-
+            -Dorg.gradle.caching=false
+            -Dorg.gradle.configuration-cache=false
+            -Dorg.gradle.daemon=false
+            -Dorg.gradle.parallel=false
+            -Dorg.gradle.workers.max=1
+        run: ./gradlew build
+
+  automerge:
+    name: Dependabot PR Auto-Merge
+    # TODO: Remove the leading "false &&" once the repository is public.
+    if: false && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Approve PR
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable Auto-Merge
+        run: |
+          if ! gh pr merge --squash --auto "$PR_URL"; then
+            echo "::warning::Automatic merge (--squash) of dependabot PR failed."
+            exit 1
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
