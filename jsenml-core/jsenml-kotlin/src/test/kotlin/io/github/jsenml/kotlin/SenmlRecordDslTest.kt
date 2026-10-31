@@ -166,9 +166,8 @@ class SenmlRecordDslTest {
     assertThat(record.value).isNull()
   }
 
-  private fun buildRecord(block: SenmlRecordDsl.() -> Unit): SenmlRecord =
-      buildSenmlPack {
-            record(block)
-          }
-          .first
+  private fun buildRecord(block: SenmlRecordDsl.() -> Unit): SenmlRecord = buildSenmlPack {
+    record(block)
+  }
+      .first
 }
