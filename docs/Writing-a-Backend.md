@@ -84,4 +84,4 @@ A new published module also needs:
 - a JUnit run configuration in `build-logic/src/main/kotlin/internal.idea-convention.gradle.kts`;
 - a mention in [Modules](./Modules.md).
 
-[rfc-examples]: https://github.com/damianmalczewski/jsenml/blob/main/jsenml-core/jsenml-api/src/testFixtures/java/io/github/jsenml/RfcExamples.java
+[rfc-examples]: https://github.com/jsenml/jsenml/blob/main/jsenml-core/jsenml-api/src/testFixtures/java/io/github/jsenml/RfcExamples.java

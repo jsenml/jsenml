@@ -75,8 +75,7 @@ jobs:
 
   automerge:
     name: Dependabot PR Auto-Merge
-    # TODO: Remove the leading "false &&" once the repository is public.
-    if: false && github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -42,7 +42,7 @@ Arguments are the representation (`json`, `cbor` or `xml`) followed by optional 
 
 Importing the project creates `Run [example-webmvc]` and `Run [example-webflux]` run configurations.
 
-[examples]: https://github.com/damianmalczewski/jsenml/tree/main/examples
-[example-webmvc]: https://github.com/damianmalczewski/jsenml/tree/main/examples/example-webmvc
-[example-webflux]: https://github.com/damianmalczewski/jsenml/tree/main/examples/example-webflux
-[example-producer]: https://github.com/damianmalczewski/jsenml/tree/main/examples/example-producer
+[examples]: https://github.com/jsenml/jsenml/tree/main/examples
+[example-webmvc]: https://github.com/jsenml/jsenml/tree/main/examples/example-webmvc
+[example-webflux]: https://github.com/jsenml/jsenml/tree/main/examples/example-webflux
+[example-producer]: https://github.com/jsenml/jsenml/tree/main/examples/example-producer

@@ -41,4 +41,4 @@ module per representation - JSON, CBOR and XML - and pluggable backends (Jackson
 - **License:** Apache 2.0
 
 [rfc8428]: https://www.rfc-editor.org/rfc/rfc8428
-[docs-folder]: https://github.com/damianmalczewski/jsenml/tree/main/docs
+[docs-folder]: https://github.com/jsenml/jsenml/tree/main/docs

@@ -79,7 +79,9 @@ public sealed interface SenmlPack extends Iterable<SenmlRecord> permits DefaultS
    *
    * <pre>{@code
    * SenmlPack temperatures =
-   *     pack.stream().filter(record -> "Cel".equals(record.getUnit())).collect(SenmlPack.collector());
+   *     pack.stream()
+   *         .filter(record -> "Cel".equals(record.getUnit()))
+   *         .collect(SenmlPack.collector());
    * }</pre>
    *
    * <p>The returned collector is stateless and shared between calls; it can be used for any number

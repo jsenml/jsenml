@@ -129,4 +129,4 @@ The autoconfiguration is registered for Spring Boot's test slices too, so SenML 
 - `jsenml.converter.cbor.enabled` - `false` disables the `application/senml+cbor` HTTP message converter; default
   `true`.
 
-[example-webflux]: https://github.com/damianmalczewski/jsenml/tree/main/examples/example-webflux
+[example-webflux]: https://github.com/jsenml/jsenml/tree/main/examples/example-webflux

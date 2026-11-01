@@ -26,8 +26,6 @@ permissions: {}
 jobs:
   publish:
     name: Publish Wiki
-    # TODO: Remove the "if: false" once the repository is public, wikis of private repositories need a paid plan.
-    if: false
     runs-on: ubuntu-latest
     permissions:
       contents: write

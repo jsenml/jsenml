@@ -76,4 +76,4 @@ The sync is one-way: every publish replaces the wiki with `docs/`. Before the fi
 wiki manually, as the wiki's Git repository exists only after that. Update the pages in the same change as the behavior
 they describe.
 
-[agents]: https://github.com/damianmalczewski/jsenml/blob/main/AGENTS.md
+[agents]: https://github.com/jsenml/jsenml/blob/main/AGENTS.md
