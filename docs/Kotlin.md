@@ -69,7 +69,7 @@ Packs are `Iterable<SenmlRecord>`, so the standard library works on them, and th
 
 ```kotlin
 val voltages = pack.asSequence().filter { it.unit == "V" }.toSenmlPack()
-val sorted = pack.sortedBy { it.name }.toSenmlPack()
+val chronological = pack.resolve().sortedByTime()
 val two = senmlPackOf(pack.first, pack.last)
 ```
 

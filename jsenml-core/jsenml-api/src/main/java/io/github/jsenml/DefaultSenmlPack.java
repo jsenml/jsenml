@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -146,6 +148,18 @@ final class DefaultSenmlPack implements SenmlPack, Serializable {
     }
     resolution.throwIfViolated();
     return new DefaultSenmlPack(List.copyOf(resolved), RESOLVED);
+  }
+
+  @Override
+  public <U extends Comparable<? super U>> SenmlPack sorted(
+      Function<? super SenmlRecord, ? extends @Nullable U> keyExtractor) {
+    Objects.requireNonNull(keyExtractor, "keyExtractor");
+    if (!isResolved()) {
+      throw new IllegalStateException("SenML pack must be in resolved form to be sorted");
+    }
+    Comparator<@Nullable U> keyOrder = Comparator.nullsFirst(Comparator.naturalOrder());
+    Comparator<SenmlRecord> order = Comparator.comparing(keyExtractor, keyOrder);
+    return new DefaultSenmlPack(records.stream().sorted(order).toList(), RESOLVED);
   }
 
   @Override

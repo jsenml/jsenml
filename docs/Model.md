@@ -20,6 +20,8 @@ Reading packs:
 - `getRecords()`, `get(index)`, `getFirst()`, `getLast()`, `size()`, `isEmpty()`, `stream()`;
 - `isResolved()` - whether the pack is already in resolved form;
 - `resolve(...)` - the equivalent pack in resolved form, see [Resolution](./Resolution.md).
+- `sortedByTime()`, `sorted(keyExtractor)` - the pack with records sorted (stable), only for a pack in resolved form,
+  see [Resolution](./Resolution.md#chronological-order).
 
 ## Record
 

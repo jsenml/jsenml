@@ -90,4 +90,15 @@ class SenmlPackDslTest {
     assertThat(pack[1]).isEqualTo(b)
     assertThat(pack.mapNotNull { it.value }).containsExactly(1.0, 2.0)
   }
+
+  @Test
+  fun `given resolved pack when sorting by time or key then orders records`() {
+    val late = SenmlRecord.builder().name("a").value(1.0).time(1.7e9 + 60).build()
+    val early = SenmlRecord.builder().name("b").value(2.0).time(1.7e9).build()
+    val pack = senmlPackOf(late, early)
+
+    assertThat(pack.sortedByTime()).isEqualTo(senmlPackOf(early, late))
+    assertThat(pack.sorted { it.time }).isEqualTo(senmlPackOf(early, late))
+    assertThat(pack.sorted { it.name }).isEqualTo(senmlPackOf(late, early))
+  }
 }

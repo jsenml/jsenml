@@ -18,21 +18,25 @@ package io.github.jsenml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Spliterator;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class SenmlPackTest {
@@ -739,5 +743,146 @@ class SenmlPackTest {
     assertThatThrownBy(withoutName::resolve).isInstanceOf(SenmlViolationException.class);
     assertThatThrownBy(withMandatory::resolve).isInstanceOf(SenmlViolationException.class);
     assertThat(withMandatory.resolve(Set.of("foo_"))).isSameAs(withMandatory);
+  }
+
+  @Test
+  void givenResolvedPack_whenSortingByTime_thenOrdersRecordsChronologically() {
+    SenmlRecord late = SenmlRecord.builder().name("a").value(1).time(1.7e9 + 60).build();
+    SenmlRecord early = SenmlRecord.builder().name("b").value(2).time(1.7e9).build();
+    SenmlRecord middle = SenmlRecord.builder().name("c").value(3).time(1.7e9 + 30).build();
+
+    SenmlPack sorted = SenmlPack.of(late, early, middle).sortedByTime();
+
+    assertThat(sorted.getRecords()).containsExactly(early, middle, late);
+    assertThat(sorted.isResolved()).isTrue();
+  }
+
+  @Test
+  void givenResolvedPackWithEqualKeys_whenSorting_thenKeepsTheirOrder() {
+    SenmlRecord first = SenmlRecord.builder().name("a").value(1).time(1.7e9 + 60).build();
+    SenmlRecord second = SenmlRecord.builder().name("b").value(2).time(1.7e9).build();
+    SenmlRecord third = SenmlRecord.builder().name("c").value(3).time(1.7e9).build();
+
+    SenmlPack sorted = SenmlPack.of(first, second, third).sortedByTime();
+
+    assertThat(sorted.getRecords()).containsExactly(second, third, first);
+  }
+
+  @Test
+  void givenReceivedPack_whenResolvingAndSorting_thenSortsResolvedRecords() {
+    SenmlPack pack =
+        SenmlPack.of(
+            SenmlRecord.builder()
+                .baseName("dev:")
+                .baseTime(1.7e9)
+                .name("a")
+                .time(60)
+                .value(1)
+                .build(),
+            SenmlRecord.builder().name("b").value(2).build());
+
+    SenmlPack sorted = pack.resolve().sortedByTime();
+
+    assertThat(sorted.getRecords())
+        .extracting(SenmlRecord::getName, SenmlRecord::getTime)
+        .containsExactly(tuple("dev:b", 1.7e9), tuple("dev:a", 1.7e9 + 60));
+  }
+
+  @Test
+  void givenEmptyPack_whenSorting_thenReturnsEmptyPack() {
+    assertThat(SenmlPack.empty().sortedByTime()).isEqualTo(SenmlPack.empty());
+  }
+
+  @Test
+  void givenUnresolvedPack_whenSorting_thenThrows() {
+    SenmlPack pack =
+        SenmlPack.of(
+            SenmlRecord.builder().baseName("dev:").name("a").value(1).time(1.7e9).build(),
+            SenmlRecord.builder().name("b").value(2).time(1.6e9).build());
+
+    assertThatThrownBy(pack::sortedByTime).isInstanceOf(IllegalStateException.class);
+    assertThatThrownBy(() -> pack.sorted(SenmlRecord::getName))
+        .isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  void givenPackWithRelativeTime_whenSorting_thenThrows() {
+    SenmlPack pack = SenmlPack.of(SenmlRecord.builder().name("a").value(1).time(-5).build());
+
+    assertThatThrownBy(pack::sortedByTime).isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  void givenRfcResolvedExample_whenSortingWithoutResolving_thenSortsIt() {
+    SenmlPack pack = RfcExamples.RESOLVED_DATA;
+
+    SenmlPack sorted = pack.sorted(SenmlRecord::getUnit);
+
+    assertThat(sorted.getRecords()).containsExactlyInAnyOrderElementsOf(pack.getRecords());
+    assertThat(sorted.getRecords())
+        .isSortedAccordingTo(
+            Comparator.comparing(SenmlRecord::getUnit)
+                .thenComparing(SenmlRecord::getTime, Comparator.naturalOrder()));
+  }
+
+  @Test
+  void givenSameNonDefaultBaseVersionInEveryRecord_whenSorting_thenSortsPack() {
+    SenmlRecord late = SenmlRecord.builder().baseVersion(11).name("a").value(1).time(1.8e9).build();
+    SenmlRecord early =
+        SenmlRecord.builder().baseVersion(11).name("b").value(2).time(1.7e9).build();
+
+    assertThat(SenmlPack.of(late, early).sortedByTime().getRecords()).containsExactly(early, late);
+  }
+
+  static Stream<SenmlRecord> recordsNotInResolvedForm() {
+    SenmlRecordBuilder resolved = SenmlRecord.builder().name("a").value(1).time(1.7e9);
+    return Stream.of(
+        resolved.build().toBuilder().time(null).build(),
+        resolved.build().toBuilder().time(60).build(),
+        resolved.build().toBuilder().baseVersion(10).build(),
+        resolved.build().toBuilder().baseTime(1.7e9).build(),
+        resolved.build().toBuilder().baseUnit("V").build(),
+        resolved.build().toBuilder().baseValue(1).build(),
+        resolved.build().toBuilder().baseSum(1).build(),
+        resolved.build().toBuilder().extension("bfoo", 1).build());
+  }
+
+  @ParameterizedTest
+  @MethodSource("recordsNotInResolvedForm")
+  void givenRecordNotInResolvedForm_whenSorting_thenThrows(SenmlRecord record) {
+    SenmlRecord other = SenmlRecord.builder().name("b").value(2).time(1.6e9).build();
+    SenmlPack pack = SenmlPack.of(other, record);
+
+    assertThatThrownBy(pack::sortedByTime).isInstanceOf(IllegalStateException.class);
+    assertThat(pack.resolve(Instant.ofEpochSecond(1_700_000_000)).sortedByTime()).hasSize(2);
+  }
+
+  @Test
+  void givenMixedBaseVersions_whenSorting_thenThrows() {
+    SenmlPack pack =
+        SenmlPack.of(
+            SenmlRecord.builder().baseVersion(11).name("a").value(1).time(1.8e9).build(),
+            SenmlRecord.builder().name("b").value(2).time(1.7e9).build());
+
+    assertThatThrownBy(pack::sortedByTime).isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  void givenResolvedPackWithNullKeys_whenSortingByKey_thenPutsThemFirst() {
+    SenmlRecord named = SenmlRecord.builder().name("a").value(1).time(1.7e9).build();
+    SenmlRecord unnamed = SenmlRecord.builder().value(2).time(1.7e9).build();
+
+    SenmlPack sorted = SenmlPack.of(named, unnamed).sorted(SenmlRecord::getName);
+
+    assertThat(sorted.getRecords()).containsExactly(unnamed, named);
+  }
+
+  @Test
+  @SuppressWarnings("NullAway")
+  void givenNullKeyExtractor_whenSorting_thenThrows() {
+    SenmlPack pack = RfcExamples.RESOLVED_DATA;
+
+    assertThatThrownBy(() -> pack.sorted((Function<SenmlRecord, Double>) null))
+        .isInstanceOf(NullPointerException.class);
   }
 }

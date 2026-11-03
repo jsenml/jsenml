@@ -22,8 +22,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Immutable SenML Pack, an ordered list of {@link SenmlRecord}s, as defined in <a
@@ -278,4 +280,43 @@ public sealed interface SenmlPack extends Iterable<SenmlRecord> permits DefaultS
    * @throws IllegalArgumentException if any accepted name is not a mandatory extension name
    */
   SenmlPack resolve(Instant now, Set<String> extensions);
+
+  /**
+   * Returns this pack with records in chronological order, as required for resolved form by <a
+   * href="https://www.rfc-editor.org/rfc/rfc8428#section-4.6">RFC 8428, Section 4.6</a>, which
+   * {@link #resolve()} does not do on its own. The sort is stable, so records with equal times keep
+   * their order.
+   *
+   * <pre>{@code
+   * SenmlPack chronological = pack.resolve().sortedByTime();
+   * }</pre>
+   *
+   * @return pack with records sorted by time, in resolved form
+   * @throws IllegalStateException if this pack is not in resolved form (see {@link #isResolved()})
+   * @see #sorted(Function)
+   */
+  default SenmlPack sortedByTime() {
+    return sorted(SenmlRecord::getTime);
+  }
+
+  /**
+   * Returns this pack with records sorted by a key, in natural order of keys. Records with a {@code
+   * null} key come first. The sort is stable, so records with equal keys keep their order.
+   *
+   * <pre>{@code
+   * SenmlPack byName = pack.resolve().sorted(SenmlRecord::getName);
+   * }</pre>
+   *
+   * <p>Only a pack in resolved form can be sorted: base fields apply to the records following them,
+   * so reordering records of other packs would change their meaning. In resolved form every record
+   * has an absolute time, as resolution turns a missing time into "now".
+   *
+   * @param <U> key type
+   * @param keyExtractor extracts the key of a record
+   * @return pack with sorted records, in resolved form
+   * @throws IllegalStateException if this pack is not in resolved form (see {@link #isResolved()})
+   * @see #sortedByTime()
+   */
+  <U extends Comparable<? super U>> SenmlPack sorted(
+      Function<? super SenmlRecord, ? extends @Nullable U> keyExtractor);
 }

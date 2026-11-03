@@ -72,6 +72,20 @@ try {
 
 The exception message is derived from the violations for logging only and is not meant to be parsed.
 
+## Chronological order
+
+Resolved form also needs records in chronological order ([RFC 8428, Section 4.6][rfc-4-6]). `resolve` keeps the order
+of the received pack, so sort the resolved pack when the order matters:
+
+```java
+SenmlPack chronological = pack.resolve().sortedByTime();
+```
+
+`sortedByTime()` is a shortcut of `sorted(SenmlRecord::getTime)`; `sorted` takes any key, records with a `null` key
+come first. Both are stable: records with equal keys keep their order. Sorting is only allowed on a pack in resolved
+form and throws `IllegalStateException` otherwise, as base fields apply to the records following them and reordering
+would change their meaning. In resolved form every record has an absolute time, as a missing one resolves to "now".
+
 ## Extensions in resolved records
 
 Regular extensions are kept on each resolved record. Base extensions (names starting with `b`) are not carried over:
@@ -82,7 +96,8 @@ it. Accepted mandatory base extensions are left to the caller, who reads them fr
 
 `isResolved()` tells whether a pack is already in resolved form: no record has base fields or base extensions, every
 record has an absolute time, and a non-default Base Version is present in every record. Resolving such a pack returns it
-as is. Resolved form does not imply validity - only `resolve` validates records.
+as is. Resolved form does not imply validity - only `resolve` validates records - nor chronological order, see
+[Chronological order](#chronological-order).
 
 [rfc-4-2]: https://www.rfc-editor.org/rfc/rfc8428#section-4.2
 [rfc-4-5-3]: https://www.rfc-editor.org/rfc/rfc8428#section-4.5.3
