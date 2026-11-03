@@ -43,14 +43,16 @@ import io.github.jsenml.SenmlRecord;
 import io.github.jsenml.SenmlRecordBuilder;
 import io.github.jsenml.SenmlTextFormat;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import org.jspecify.annotations.Nullable;
 
 final class SenmlRecordTypeAdapter extends TypeAdapter<SenmlRecord> {
 
   /**
    * Writes given record as a SenML JSON object, with present fields in the order of RFC 8428
-   * examples followed by extensions, numbers in plain notation and octet extensions as base64url
-   * strings.
+   * examples followed by extensions, numbers formatted by {@code SenmlTextFormat.formatNumber} and
+   * octet extensions as base64url strings.
    *
    * @param out JSON writer
    * @param record record to write
@@ -112,12 +114,12 @@ final class SenmlRecordTypeAdapter extends TypeAdapter<SenmlRecord> {
   }
 
   /**
-   * Reads a SenML JSON object as a record. Unknown fields with a string, number or boolean value
-   * and a valid extension name are kept as extensions, including those that are mandatory to
-   * understand (ending with {@code _}); whether those are acceptable is checked by {@code
-   * SenmlPack.resolve}. Other unknown fields are skipped, unless they are mandatory to understand,
-   * which, like fields of wrong type and values the record builder rejects (e.g. non-finite
-   * numbers, invalid base64url), are rejected with a {@link JsonSyntaxException}.
+   * Reads a SenML JSON object as a record, rejecting duplicated labels. Unknown fields with a
+   * string, number or boolean value and a valid extension name are kept as extensions, including
+   * those that are mandatory to understand (ending with {@code _}); whether those are acceptable is
+   * checked by {@code SenmlPack.resolve}. Other unknown fields are skipped, unless they are
+   * mandatory to understand, which, like fields of wrong type and values the record builder rejects
+   * (e.g. non-finite numbers, invalid base64url), are rejected with a {@link JsonSyntaxException}.
    *
    * @param in JSON reader
    * @return record read
@@ -136,9 +138,14 @@ final class SenmlRecordTypeAdapter extends TypeAdapter<SenmlRecord> {
   private SenmlRecord readRecord(JsonReader in) throws IOException {
     expect(in, JsonToken.BEGIN_OBJECT, "SenML record must be a JSON object");
     SenmlRecordBuilder builder = SenmlRecord.builder();
+    Set<String> seen = new HashSet<>();
     in.beginObject();
     while (in.hasNext()) {
       String label = in.nextName();
+      if (!seen.add(label)) {
+        throw new JsonParseException(
+            "SenML field '" + label + "' is duplicated at " + in.getPreviousPath());
+      }
       switch (label) {
         case BASE_NAME -> builder.baseName(readString(in, label));
         case BASE_TIME -> builder.baseTime(readNumber(in, label));
@@ -174,8 +181,9 @@ final class SenmlRecordTypeAdapter extends TypeAdapter<SenmlRecord> {
 
   private static int readInteger(JsonReader in, String label) throws IOException {
     expect(in, JsonToken.NUMBER, "SenML field '" + label + "' must be an integer");
+    // JsonReader.nextInt() accepts integral literals like 10.0 or 1e1, which other backends reject
     try {
-      return in.nextInt();
+      return Integer.parseInt(in.nextString());
     } catch (NumberFormatException e) {
       throw new JsonParseException("SenML field '" + label + "' must be an integer", e);
     }
