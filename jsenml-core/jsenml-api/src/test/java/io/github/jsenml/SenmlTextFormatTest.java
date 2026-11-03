@@ -35,10 +35,39 @@ class SenmlTextFormatTest {
     "-1.25, -1.25",
     "1.320067464E9, 1320067464",
     "1.320067464123E9, 1320067464.123",
-    "1.0E-7, 0.0000001"
+    "1.0E-7, 0.0000001",
+    "1.0E17, 100000000000000000",
+    "-1.0E17, -100000000000000000",
+    "1.0E-16, 0.0000000000000001",
+    "1.2345678901234567E8, 123456789.01234567"
   })
-  void givenFiniteNumber_whenFormatting_thenWritesPlainNumber(double number, String expected) {
+  void givenNumberWithShortPlainForm_whenFormatting_thenWritesPlainNumber(
+      double number, String expected) {
     assertThat(SenmlTextFormat.formatNumber(number)).isEqualTo(expected);
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+    "1.0E18, 1e18",
+    "-1.0E18, -1e18",
+    "1.5E20, 1.5e20",
+    "1.0E300, 1e300",
+    "-1.7976931348623157E308, -1.7976931348623157e308",
+    "1.0E-17, 1e-17",
+    "1.5E-20, 1.5e-20",
+    "4.9E-324, 4.9e-324",
+    "1.2345678901234567E20, 1.2345678901234567e20"
+  })
+  void givenNumberWithLongPlainForm_whenFormatting_thenWritesExponentNotation(
+      double number, String expected) {
+    assertThat(SenmlTextFormat.formatNumber(number)).isEqualTo(expected);
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      doubles = {1.0E18, 1.5E-20, -1.7976931348623157E308, 4.9E-324, 1.2345678901234567E20})
+  void givenNumberInExponentNotation_whenParsing_thenGivesSameDouble(double number) {
+    assertThat(Double.parseDouble(SenmlTextFormat.formatNumber(number))).isEqualTo(number);
   }
 
   @ParameterizedTest
