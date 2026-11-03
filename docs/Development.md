@@ -51,13 +51,13 @@ module.
 
 GitHub Actions:
 
-- `ci.yml` - builds on Java 17, 21 and 25 on pushes and pull requests to `main` and `release-*` branches, and weekly.
-  Changes in `docs/` alone do not trigger it.
-- `wiki.yml` - publishes `docs/` to the wiki, see below.
+- `ci.yml` - runs Gradle on Java 17, 21 and 25 (the build itself always uses the JDK 25 toolchain) on pushes and pull
+  requests to `main` and `release-*` branches, and weekly. Changes in `docs/` alone do not trigger it. Pull requests
+  of Dependabot are approved and set to auto-merge (squash) once the build passes.
+- `wiki.yml` - publishes `docs/` to the wiki on pushes to `main` that change `docs/`, see below.
 
 Dependabot updates GitHub Actions and direct Gradle dependencies monthly, skipping major versions and the Gradle
-wrapper. Auto-merge of its pull requests and the wiki publishing are turned off (`if: false`) while the repository is
-private.
+wrapper.
 
 ## Publishing
 

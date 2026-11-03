@@ -18,11 +18,14 @@ under their text labels:
 
 - Labels: `bn`, `bt`, `bu`, `bv`, `bs`, `bver`, `n`, `u`, `v`, `vs`, `vb`, `vd`, `s`, `t`, `ut` (constants in
   `SenmlTextFormat`).
-- Numbers are written as plain literals, without exponent and trailing zeros: `1.27602E9` becomes `1276020000`, `21.0`
-  becomes `21`.
+- Numbers are written without trailing zeros, as plain literals up to 18 characters (sign aside) and in exponent
+  notation with a lower case `e` above that, as RFC 8428, Section 5 recommends a mantissa shorter than 19 characters:
+  `1.27602E9` becomes `1276020000`, `21.0` becomes `21`, `1.0E300` becomes `1e300`, `1.5E-20` becomes `1.5e-20`.
 - The Data Value (`vd`) and octet extensions are written as unpadded base64url strings.
 - Decoding ignores unknown fields with non-scalar values and keeps scalar ones as extensions, see
   [Extensions](./Extensions.md).
+- Decoding rejects a record with a duplicated label and a Base Version (`bver`) that is not an integer literal (e.g.
+  `10.0` or `1e1`).
 
 ## CBOR
 
@@ -41,6 +44,7 @@ Encoding rules:
 Decoding rules:
 
 - unknown integer keys are rejected, as the set of integer labels is closed;
+- a record with a duplicated key is rejected;
 - unknown text-string keys follow the same rules as unknown JSON fields;
 - every extension type round-trips, including octets.
 

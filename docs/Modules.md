@@ -58,5 +58,5 @@ Spring Boot 4 integration, see [Spring Boot](./Spring-Boot.md).
 
 - `jsenml-spring-boot-autoconfigure` (`io.github.jsenml.spring.boot.autoconfigure`) - autoconfiguration of Boot's
   Jackson 3 mappers, `Gson`, HTTP message converters and springdoc-openapi schemas.
-- `jsenml-spring-boot-starter` (`io.github.jsenml.spring.boot.starter`) - autoconfiguration, `jsenml-json-jackson`
-  and `spring-boot-starter-jackson`; other backends are optional and picked up at runtime.
+- `jsenml-spring-boot-starter` (`io.github.jsenml.spring.boot.starter`) - autoconfiguration, `jsenml-json-jackson`,
+  `jsenml-kotlin` and `spring-boot-starter-jackson`; other backends are optional and picked up at runtime.

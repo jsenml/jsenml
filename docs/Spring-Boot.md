@@ -5,9 +5,9 @@ SenML schemas in springdoc-openapi documents.
 
 ## Starter
 
-`jsenml-spring-boot-starter` brings the autoconfiguration, the Jackson 3 JSON backend (`jsenml-json-jackson`) and
-`spring-boot-starter-jackson`. Everything else is optional: the autoconfiguration picks it up at runtime when it is on
-the classpath.
+`jsenml-spring-boot-starter` brings the autoconfiguration, the Jackson 3 JSON backend (`jsenml-json-jackson`), the
+Kotlin DSL (`jsenml-kotlin`) and `spring-boot-starter-jackson`. Everything else is optional: the autoconfiguration
+picks it up at runtime when it is on the classpath.
 
 ```kotlin
 dependencies {
