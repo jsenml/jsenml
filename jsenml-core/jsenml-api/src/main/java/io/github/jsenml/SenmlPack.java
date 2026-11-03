@@ -252,6 +252,11 @@ public sealed interface SenmlPack extends Iterable<SenmlRecord> permits DefaultS
    * value is only applied to records with a numeric value, as applying it to records with other
    * value types would yield a second value field.
    *
+   * <p>Any Base Version is accepted and kept on resolved records if other than the default one, so
+   * that applications can build their own SenML-based models on it. Rejecting packs of a version
+   * the application does not understand, or of mixed versions (RFC 8428, Section 4.4), is left to
+   * the application.
+   *
    * <p>Every resolved record must have a valid name, at most one value field ({@code v}, {@code
    * vs}, {@code vb}, {@code vd}), and a value field unless it has a sum (RFC 8428, Section 4.2).
    *

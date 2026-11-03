@@ -21,7 +21,12 @@ In resolved form, base fields (except Base Version) are applied to and removed f
 Additions are done in decimal and rounded to `double` once, so `0.1 + 0.2` resolves to `0.3`.
 
 Base Version is not a value to apply: a non-default version (other than 10) is kept on every resolved record, the
-default one is dropped.
+default one is dropped. Like other base fields, a Base Version applies from its record on, until the next one.
+
+`resolve` deliberately accepts any version, so that applications can build their own SenML-based models on it (e.g.
+feature bits of [RFC 9100][rfc-9100]). RFC 8428, Section 4.4 requires a recipient not to use a pack of a version it
+does not understand, and all records of a pack to have the same version - checking that is up to the application,
+e.g. with `getBaseVersion()` of resolved records.
 
 ```java
 // [{"bn":"urn:dev:ow:10e2073a01080063:","bt":1.320067464e+09,"bu":"%RH","v":20},
@@ -82,3 +87,4 @@ as is. Resolved form does not imply validity - only `resolve` validates records.
 [rfc-4-2]: https://www.rfc-editor.org/rfc/rfc8428#section-4.2
 [rfc-4-5-3]: https://www.rfc-editor.org/rfc/rfc8428#section-4.5.3
 [rfc-4-6]: https://www.rfc-editor.org/rfc/rfc8428#section-4.6
+[rfc-9100]: https://www.rfc-editor.org/rfc/rfc9100
