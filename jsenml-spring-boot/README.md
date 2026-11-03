@@ -19,6 +19,6 @@ for removal and is not autoconfigured.
 
 ## `jsenml-spring-boot-starter`
 
-Autoconfiguration, the Jackson 3 JSON backend (`jsenml-json-jackson`) and `spring-boot-starter-jackson`. Everything
-else is optional and picked up at runtime when on the classpath: add `jsenml-cbor-jackson` or `jsenml-xml-jackson` for
-CBOR or XML, `jsenml-json-gson` for Boot's `Gson`.
+Autoconfiguration, the Jackson 3 JSON backend (`jsenml-json-jackson`), the Kotlin DSL (`jsenml-kotlin`) and
+`spring-boot-starter-jackson`. Everything else is optional and picked up at runtime when on the classpath: add
+`jsenml-cbor-jackson` or `jsenml-xml-jackson` for CBOR or XML, `jsenml-json-gson` for Boot's `Gson`.

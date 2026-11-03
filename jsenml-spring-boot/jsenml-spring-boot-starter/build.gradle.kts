@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    api(project(":jsenml-core:jsenml-kotlin"))
     api(project(":jsenml-jackson:jsenml-json-jackson"))
     api(project(":jsenml-spring-boot:jsenml-spring-boot-autoconfigure"))
     api(libs.spring.boot.starter.jackson)

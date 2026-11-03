@@ -9,7 +9,6 @@ plugins {
 dependencies {
     // Main
     api(project(":jsenml-core:jsenml-api"))
-    api(project(":jsenml-core:jsenml-kotlin"))
 
     compileOnly(project(":jsenml-gson:jsenml-json-gson"))
     compileOnly(project(":jsenml-jackson:jsenml-cbor-jackson"))
