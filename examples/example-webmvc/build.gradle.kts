@@ -14,7 +14,6 @@ kotlin {
 dependencies {
     implementation(project(":jsenml-spring-boot:jsenml-spring-boot-starter"))
     implementation(project(":jsenml-jackson:jsenml-cbor-jackson"))
-    implementation(project(":jsenml-jackson:jsenml-xml-jackson"))
     implementation(project(":jsenml-core:jsenml-kotlin"))
 
     implementation(libs.spring.boot.starter.webmvc)

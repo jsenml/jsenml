@@ -22,7 +22,6 @@ import io.github.jsenml.SenmlViolationException
 import io.github.jsenml.cbor.SenmlCborCodec
 import io.github.jsenml.json.SenmlJsonCodec
 import io.github.jsenml.kotlin.toSenmlPack
-import io.github.jsenml.xml.SenmlXmlCodec
 import io.swagger.v3.oas.annotations.Hidden
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -44,7 +43,7 @@ fun main(args: Array<String>) {
   runApplication<WebMvcApplication>(*args)
 }
 
-/** Example application accepting SenML packs in JSON, CBOR and XML. */
+/** Example application accepting SenML packs in JSON and CBOR. */
 @SpringBootApplication //
 class WebMvcApplication
 
@@ -67,9 +66,9 @@ class SenmlStore {
 }
 
 /**
- * Accepts SenML packs in JSON, CBOR and XML, each with its own handler, returns all stored records
- * in the format requested by `Accept` (SenML JSON by default), whatever format they were received
- * in, or clears them.
+ * Accepts SenML packs in JSON and CBOR, each with its own handler, returns all stored records in
+ * the format requested by `Accept` (SenML JSON by default), whatever format they were received in,
+ * or clears them.
  */
 @RestController
 @RequestMapping("/packs")
@@ -85,12 +84,8 @@ class SenmlController(private val store: SenmlStore) {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun addCbor(@RequestBody pack: SenmlPack) = add(pack, "CBOR")
 
-  @PostMapping(consumes = [SenmlXmlCodec.MEDIA_TYPE])
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  fun addXml(@RequestBody pack: SenmlPack) = add(pack, "XML")
-
   @GetMapping(
-      produces = [SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE, SenmlXmlCodec.MEDIA_TYPE],
+      produces = [SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE],
   )
   fun all(): SenmlPack {
     val pack = store.all()

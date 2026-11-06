@@ -71,20 +71,5 @@ class DefaultSenmlModelConverterTest {
     assertThat(record.getProperties()).doesNotContainKey("baseName");
   }
 
-  @Test
-  void givenPack_whenResolving_thenDescribesSenmlXmlRepresentation() {
-    Map<String, Schema> schemas = converters.readAll(SenmlPack.class);
-
-    Schema<?> pack = schemas.get("SenmlPack");
-    assertThat(pack.getXml().getName()).isEqualTo("sensml");
-    assertThat(pack.getXml().getNamespace()).isEqualTo("urn:ietf:params:xml:ns:senml");
-    assertThat(pack.getXml().getWrapped()).isTrue();
-    Schema<?> record = schemas.get("SenmlRecord");
-    assertThat(record.getXml().getName()).isEqualTo("senml");
-    assertThat(record.getXml().getNamespace()).isNull();
-    assertThat(record.getProperties().values())
-        .allSatisfy(property -> assertThat(property.getXml().getAttribute()).isTrue());
-  }
-
   record Measurement(String device, SenmlPack pack, List<SenmlRecord> records) {}
 }

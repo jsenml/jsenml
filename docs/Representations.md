@@ -1,6 +1,6 @@
 # Representations
 
-RFC 8428 defines a pack in several representations. JSenML supports JSON, CBOR and XML, each in its own module, and all
+RFC 8428 defines a pack in several representations. JSenML supports JSON and CBOR, each in its own module, and all
 backends of a representation produce identical output for the same pack.
 
 ## JSON
@@ -48,30 +48,12 @@ Decoding rules:
 - unknown text-string keys follow the same rules as unknown JSON fields;
 - every extension type round-trips, including octets.
 
-## XML
-
-`application/senml+xml`, [RFC 8428, Section 7][rfc-7]. A pack is a `sensml` element in the
-`urn:ietf:params:xml:ns:senml` namespace, with a `senml` element per record and fields as attributes named by the text
-labels:
-
-```xml
-<sensml xmlns="urn:ietf:params:xml:ns:senml">
-  <senml bn="urn:dev:ow:10e2073a01080063:" bt="1320067464" bu="%RH" v="20"/>
-  <senml u="lon" v="24.30621"/>
-  <senml n="temp" u="Cel" t="60" v="23.1"/>
-</sensml>
-```
-
-- Only the UTF-8 form of XML is allowed; external entities are never resolved.
-- Numbers and octets are formatted as in JSON.
-- Attributes carry no type, so extensions are decoded as strings, including ones written as numbers, booleans or
-  octets. Unknown attributes with an invalid extension name and unknown child elements are ignored.
-- `SenmlXmlCodec` declares the namespace and element names as `NAMESPACE`, `PACK_ELEMENT` and `RECORD_ELEMENT`.
-
 ## Not supported
 
-EXI ([RFC 8428, Section 8][rfc-8]) has no module. Each representation has its own codec type and provider SPI, so a new
-one is added as a new module without changing existing ones - see [Writing a Backend](./Writing-a-Backend.md).
+XML ([RFC 8428, Section 7][rfc-7]) and EXI ([RFC 8428, Section 8][rfc-8]) are deliberately not supported, see
+[RFC Conformance](./RFC-Conformance.md#deliberate-decisions). Each representation has its own codec type and provider
+SPI, so a new one would be added as a new module without changing existing ones - see
+[Writing a Backend](./Writing-a-Backend.md).
 
 [rfc-5]: https://www.rfc-editor.org/rfc/rfc8428#section-5
 [rfc-6]: https://www.rfc-editor.org/rfc/rfc8428#section-6

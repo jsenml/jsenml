@@ -117,8 +117,7 @@ public sealed interface SenmlRecordBuilder permits DefaultSenmlRecordBuilder {
   SenmlRecordBuilder booleanValue(@Nullable Boolean booleanValue);
 
   /**
-   * Sets the Data Value ({@code vd}) from base64url text, as carried in JSON and XML. Padding is
-   * optional.
+   * Sets the Data Value ({@code vd}) from base64url text, as carried in JSON. Padding is optional.
    *
    * @param dataValue base64url-encoded data value or {@code null} to clear
    * @return this builder

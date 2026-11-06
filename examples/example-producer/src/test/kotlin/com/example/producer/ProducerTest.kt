@@ -46,13 +46,13 @@ class ProducerTest {
   fun `given all options when parsing options then reads them`() {
     val options =
         ProducerOptions.parse(
-            arrayOf("--url=http://example.com/packs", "xml", "--count=3", "--interval-ms=50"),
+            arrayOf("--url=http://example.com/packs", "cbor", "--count=3", "--interval-ms=50"),
         )
 
     assertThat(options)
         .isEqualTo(
             ProducerOptions(
-                SenmlFormat.XML,
+                SenmlFormat.CBOR,
                 URI.create("http://example.com/packs"),
                 3,
                 Duration.ofMillis(50),

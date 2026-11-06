@@ -9,8 +9,7 @@ repository, grouped by library (`jsenml-jackson/`, `jsenml-gson/`, ...), one mod
 Implement the provider SPI of the representation:
 
 - `io.github.jsenml.json.spi.SenmlJsonCodecProvider` - creates `SenmlJsonCodec`s;
-- `io.github.jsenml.cbor.spi.SenmlCborCodecProvider` - creates `SenmlCborCodec`s;
-- `io.github.jsenml.xml.spi.SenmlXmlCodecProvider` - creates `SenmlXmlCodec`s.
+- `io.github.jsenml.cbor.spi.SenmlCborCodecProvider` - creates `SenmlCborCodec`s.
 
 All of them extend `io.github.jsenml.SenmlCodecProvider`:
 
@@ -45,7 +44,6 @@ module io.github.jsenml.json.mylib {
 - Follow the decoding rules of the representation for unknown fields and mandatory extensions, see
   [Representations](./Representations.md) and [Extensions](./Extensions.md).
 - Throw `SenmlCodecException` for malformed input and I/O failures.
-- XML codecs must not resolve external entities.
 - Offer a constructor taking the library's own configured instance (mapper, `Gson`, ...) without modifying it, as
   existing backends do.
 
@@ -70,7 +68,7 @@ dependencies {
 }
 ```
 
-The CBOR and XML counterparts are `AbstractSenmlCborCodecTest` and `AbstractSenmlXmlCodecTest`. Test fixtures are not
+The CBOR counterpart is `AbstractSenmlCborCodecTest`. Test fixtures are not
 published, so they are available to modules of this repository only. Add backend-specific tests next to them, but put
 behavior every backend shares into the contract tests instead of duplicating it.
 

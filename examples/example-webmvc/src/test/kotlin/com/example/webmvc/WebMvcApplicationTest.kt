@@ -20,8 +20,6 @@ import io.github.jsenml.cbor.SenmlCborCodec
 import io.github.jsenml.cbor.jackson.JacksonSenmlCborCodec
 import io.github.jsenml.json.SenmlJsonCodec
 import io.github.jsenml.kotlin.buildSenmlPack
-import io.github.jsenml.xml.SenmlXmlCodec
-import io.github.jsenml.xml.jackson.JacksonSenmlXmlCodec
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -58,11 +56,6 @@ class WebMvcApplicationTest(@Autowired context: WebApplicationContext) {
         """[{"bn":"urn:dev:example:","bt":1700000000,"n":"temp","u":"Cel","v":21.5}]""",
     )
     post(SenmlCborCodec.MEDIA_TYPE, cbor)
-    post(
-        SenmlXmlCodec.MEDIA_TYPE,
-        """<sensml xmlns="urn:ietf:params:xml:ns:senml">""" +
-            """<senml bn="urn:dev:example:" bt="1700000000" n="open" vb="true"/></sensml>""",
-    )
 
     client
         .get()
@@ -78,15 +71,14 @@ class WebMvcApplicationTest(@Autowired context: WebApplicationContext) {
             """
             [
               {"n":"urn:dev:example:temp","u":"Cel","t":1700000000,"v":21.5},
-              {"n":"urn:dev:example:humidity","u":"%RH","t":1700000000,"v":40},
-              {"n":"urn:dev:example:open","t":1700000000,"vb":true}
+              {"n":"urn:dev:example:humidity","u":"%RH","t":1700000000,"v":40}
             ]
             """,
         )
   }
 
   @Test
-  fun `given stored pack when getting it as cbor and xml then returns its records`() {
+  fun `given stored pack when getting it as cbor then returns its records`() {
     post(SenmlJsonCodec.MEDIA_TYPE, """[{"n":"urn:dev:example:temp","t":1700000000,"v":21.5}]""")
     val expected = buildSenmlPack {
       record {
@@ -97,7 +89,6 @@ class WebMvcApplicationTest(@Autowired context: WebApplicationContext) {
     }
 
     assertThat(JacksonSenmlCborCodec().decode(get(SenmlCborCodec.MEDIA_TYPE))).isEqualTo(expected)
-    assertThat(JacksonSenmlXmlCodec().decode(get(SenmlXmlCodec.MEDIA_TYPE))).isEqualTo(expected)
   }
 
   @Test

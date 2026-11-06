@@ -13,7 +13,6 @@ dependencies {
     compileOnly(project(":jsenml-gson:jsenml-json-gson"))
     compileOnly(project(":jsenml-jackson:jsenml-cbor-jackson"))
     compileOnly(project(":jsenml-jackson:jsenml-json-jackson"))
-    compileOnly(project(":jsenml-jackson:jsenml-xml-jackson"))
 
     compileOnly(libs.spring.boot.autoconfigure)
     compileOnly(libs.spring.boot.gson)
@@ -28,7 +27,6 @@ dependencies {
     testImplementation(project(":jsenml-jackson:jsenml-cbor-jackson"))
     testImplementation(project(":jsenml-gson:jsenml-json-gson"))
     testImplementation(project(":jsenml-jackson:jsenml-json-jackson"))
-    testImplementation(project(":jsenml-jackson:jsenml-xml-jackson"))
 
     testImplementation(libs.spring.boot.starter.webflux.test)
     testImplementation(libs.spring.boot.starter.webmvc.test)

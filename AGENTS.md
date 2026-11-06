@@ -1,12 +1,12 @@
 # `jsenml` - Agent Instructions
 
-SenML (RFC 8428) library for Java. Framework-agnostic model with a module per representation (JSON, CBOR, XML), each
+SenML (RFC 8428) library for Java. Framework-agnostic model with a module per representation (JSON, CBOR), each
 with pluggable backends discovered via `java.util.ServiceLoader`.
 
 ## Design Rules
 
 - `jsenml-api` must stay free of serialization dependencies (only `org.jspecify`).
-- One module per SenML content type (`jsenml-json`, `jsenml-cbor`, `jsenml-xml`), with its own codec interface, provider
+- One module per SenML content type (`jsenml-json`, `jsenml-cbor`), with its own codec interface, provider
   SPI (`io.github.jsenml.<format>.spi`) and entry point (`SenmlJson`, ...). Never add a format switch/parameter to an
   existing codec, never put format-specific API into `jsenml-api`.
 - Backends must produce identical output. Shared behavior is tested in `AbstractSenml<Format>CodecTest` (test fixtures

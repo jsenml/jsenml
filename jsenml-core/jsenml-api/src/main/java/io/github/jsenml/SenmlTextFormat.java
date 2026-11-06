@@ -20,11 +20,11 @@ import java.math.BigDecimal;
 import java.util.Base64;
 
 /**
- * Text format of SenML fields, shared by the text representations: labels, as defined in <a
+ * Text format of SenML fields: labels, as defined in <a
  * href="https://www.rfc-editor.org/rfc/rfc8428#section-4.1">RFC 8428, Section 4.1</a>, used as
- * object keys by the JSON representation and as attribute names by the XML representation, and
- * number formatting, so that every backend produces the same textual output for the same pack. The
- * CBOR representation uses integer labels instead ({@code SenmlCborLabels} in {@code jsenml-cbor}).
+ * object keys by the JSON representation, and number formatting, so that every backend produces the
+ * same textual output for the same pack. The CBOR representation uses integer labels instead
+ * ({@code SenmlCborFormat} in {@code jsenml-cbor}).
  */
 public final class SenmlTextFormat {
 

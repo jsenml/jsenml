@@ -21,8 +21,8 @@
  *
  * <p>This package has no serialization dependencies. Each SenML representation has its own module
  * with codec, provider SPI and entry point ({@code jsenml-json} with {@code SenmlJson}, {@code
- * jsenml-cbor} with {@code SenmlCbor}, {@code jsenml-xml} with {@code SenmlXml}), implemented by
- * backend modules (e.g. {@code jsenml-json-jackson}).
+ * jsenml-cbor} with {@code SenmlCbor}), implemented by backend modules (e.g. {@code
+ * jsenml-json-jackson}).
  */
 @NullMarked
 package io.github.jsenml;

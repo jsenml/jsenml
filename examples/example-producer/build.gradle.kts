@@ -13,7 +13,6 @@ kotlin {
 dependencies {
     implementation(project(":jsenml-jackson:jsenml-json-jackson"))
     implementation(project(":jsenml-jackson:jsenml-cbor-jackson"))
-    implementation(project(":jsenml-jackson:jsenml-xml-jackson"))
     implementation(project(":jsenml-core:jsenml-kotlin"))
     implementation(kotlin("stdlib"))
 
@@ -54,12 +53,4 @@ tasks.register<JavaExec>("runCbor") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = application.mainClass
     args("cbor", "--count=1")
-}
-
-tasks.register<JavaExec>("runXml") {
-    group = ApplicationPlugin.APPLICATION_GROUP
-    description = "Sends packs of random measurements in SenML XML to http://localhost:8080/packs."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = application.mainClass
-    args("xml", "--count=1")
 }

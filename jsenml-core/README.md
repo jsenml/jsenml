@@ -22,11 +22,6 @@ backends are in its test fixtures (`AbstractSenmlJsonCodecTest`).
 SenML CBOR (`application/senml+cbor`): `SenmlCborCodec`, its SPI, integer labels (`SenmlCborFormat`) and the
 `SenmlCbor` entry point. Contract tests for backends are in its test fixtures (`AbstractSenmlCborCodecTest`).
 
-## `jsenml-xml`
-
-SenML XML (`application/senml+xml`): `SenmlXmlCodec`, its SPI and the `SenmlXml` entry point. Contract tests for
-backends are in its test fixtures (`AbstractSenmlXmlCodecTest`).
-
 ## `jsenml-kotlin`
 
 Kotlin DSL (`buildSenmlPack`), `SenmlRecord.copy`, `SenmlExtensions.copy` and conversions from collections and

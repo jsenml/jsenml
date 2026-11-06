@@ -23,14 +23,12 @@ import io.github.jsenml.SenmlPack;
 import io.github.jsenml.SenmlRecord;
 import io.github.jsenml.cbor.SenmlCbor;
 import io.github.jsenml.json.SenmlJson;
-import io.github.jsenml.xml.SenmlXml;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.cbor.CBORMapper;
-import tools.jackson.dataformat.xml.XmlMapper;
 
 @JsonTest
 class SenmlJsonSliceTest {
@@ -47,15 +45,12 @@ class SenmlJsonSliceTest {
 
   @Autowired private CBORMapper cborMapper;
 
-  @Autowired private XmlMapper xmlMapper;
-
   @Autowired private Gson gson;
 
   @Test
   void givenJsonTestSlice_whenWritingPackWithJacksonMappers_thenWritesSenml() {
     assertThat(jsonMapper.writeValueAsString(PACK)).isEqualTo(SenmlJson.toJson(PACK));
     assertThat(cborMapper.writeValueAsBytes(PACK)).isEqualTo(SenmlCbor.toCbor(PACK));
-    assertThat(xmlMapper.writeValueAsString(PACK)).isEqualTo(SenmlXml.toXml(PACK));
   }
 
   @Test

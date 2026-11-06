@@ -15,11 +15,10 @@ dependencies {
     implementation("io.github.jsenml:jsenml-spring-boot-starter")
     // optional, picked up at runtime
     implementation("io.github.jsenml:jsenml-cbor-jackson")
-    implementation("io.github.jsenml:jsenml-xml-jackson")
 }
 ```
 
-- `jsenml-cbor-jackson`, `jsenml-xml-jackson` - SenML CBOR and XML in Boot's `CBORMapper` and `XmlMapper`;
+- `jsenml-cbor-jackson` - SenML CBOR in Boot's `CBORMapper`;
 - `jsenml-json-gson` - SenML JSON in Boot's `Gson`, next to `spring-boot-starter-gson`;
 - springdoc-openapi - SenML schemas in API documents.
 
@@ -39,7 +38,7 @@ class PackController {
         store.add(pack.resolve());
     }
 
-    @GetMapping(produces = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE, SenmlXmlCodec.MEDIA_TYPE})
+    @GetMapping(produces = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE})
     SenmlPack all() {
         return store.all();
     }
@@ -50,13 +49,13 @@ class PackController {
 
 Each part is active only when its backend is on the classpath:
 
-- `SenmlJacksonAutoConfiguration` registers the Jackson 3 modules in Boot's `JsonMapper` (`jsenml-json-jackson`),
-  `CBORMapper` (`jsenml-cbor-jackson`) and `XmlMapper` (`jsenml-xml-jackson`);
+- `SenmlJacksonAutoConfiguration` registers the Jackson 3 modules in Boot's `JsonMapper` (`jsenml-json-jackson`)
+  and `CBORMapper` (`jsenml-cbor-jackson`);
 - `SenmlGsonAutoConfiguration` registers `SenmlTypeAdapterFactory` in Boot's `Gson` (`jsenml-json-gson`).
 
 Every registration is a customizer bean. Define a bean of the same type to replace it:
 
-- `SenmlJsonMapperBuilderCustomizer`, `SenmlCborMapperBuilderCustomizer`, `SenmlXmlMapperBuilderCustomizer`;
+- `SenmlJsonMapperBuilderCustomizer`, `SenmlCborMapperBuilderCustomizer`;
 - `SenmlGsonBuilderCustomizer`.
 
 Boot's Jackson 2 support is deprecated for removal, so it is not autoconfigured. To use the Jackson 2 backends with it,
@@ -67,8 +66,7 @@ register their modules yourself, e.g. `SenmlJsonJacksonModule` from `jsenml-json
 
 HTTP message converters handle request and response bodies of Spring MVC, `RestClient` and `RestTemplate`:
 
-- `application/senml+json` and `application/senml+xml` work out of the box: Boot's JSON and XML converters use its
-  mappers and accept `+json` and `+xml` media types.
+- `application/senml+json` works out of the box: Boot's JSON converter uses its mapper and accepts `+json` media types.
 - `application/senml+cbor` is handled by a converter using Boot's `CBORMapper`, added by
   `SenmlHttpMessageConvertersAutoConfiguration` when `jsenml-cbor-jackson` is on the classpath. It is added after all
   other converters, so they and the default media type of responses stay unchanged.
@@ -86,34 +84,31 @@ Boot picks Jackson for JSON when it is on the classpath, and `spring-boot-starte
 HTTP codecs handle request and response bodies of Spring WebFlux and `WebClient`:
 
 - `application/senml+json` works out of the box, as Boot's JSON codecs use its `JsonMapper`.
-- `application/senml+cbor` and `application/senml+xml` need the application's own `CodecCustomizer`. Boot builds the
-  CBOR and XML codecs with new mappers, without SenML support, and the CBOR codecs accept `application/cbor` only.
+- `application/senml+cbor` needs the application's own `CodecCustomizer`. Boot builds the CBOR codecs with a new mapper,
+  without SenML support, and they accept `application/cbor` only.
 
-Spring's Jackson CBOR and XML encoders also reject every `encode` call as unsupported stream encoding, including single
-values such as response bodies, so the customizer uses encoders that encode those with `encodeValue`.
+Spring's Jackson CBOR encoder also rejects every `encode` call as unsupported stream encoding, including single
+values such as response bodies, so the customizer uses an encoder that encodes those with `encodeValue`.
 [`example-webflux`][example-webflux] shows both:
 
 ```kotlin
 @Bean
-fun senmlCodecCustomizer(cborMapper: CBORMapper, xmlMapper: XmlMapper) = CodecCustomizer {
+fun senmlCodecCustomizer(cborMapper: CBORMapper) = CodecCustomizer {
     val defaults = it.defaultCodecs()
     val senmlCbor = MediaType.parseMediaType(SenmlCborCodec.MEDIA_TYPE)
     defaults.jacksonCborDecoder(JacksonCborDecoder(cborMapper, MediaType.APPLICATION_CBOR, senmlCbor))
     defaults.jacksonCborEncoder(SingleValueCborEncoder(cborMapper, MediaType.APPLICATION_CBOR, senmlCbor))
-    defaults.jacksonXmlDecoder(JacksonXmlDecoder(xmlMapper))
-    defaults.jacksonXmlEncoder(SingleValueXmlEncoder(xmlMapper))
 }
 ```
 
-This replaces the default CBOR and XML codecs of the whole application, which is why JSenML leaves it to you instead of
+This replaces the default CBOR codecs of the whole application, which is why JSenML leaves it to you instead of
 autoconfiguring it.
 
 ## springdoc-openapi
 
 With springdoc-openapi on the classpath, `SenmlSpringDocAutoConfiguration` registers a `SenmlModelConverter`
 describing `SenmlPack` and `SenmlRecord` in their SenML representation (`bn` instead of `baseName`), as reusable
-`SenmlPack` and `SenmlRecord` components, including XML metadata for `application/senml+xml` (the `sensml` wrapper
-element, the SenML namespace and fields as attributes). Define a `SenmlModelConverter` bean to replace it.
+`SenmlPack` and `SenmlRecord` components. Define a `SenmlModelConverter` bean to replace it.
 
 ## Test slices
 

@@ -19,14 +19,12 @@ package io.github.jsenml.spring.boot.autoconfigure.springdoc;
 import io.github.jsenml.SenmlPack;
 import io.github.jsenml.SenmlRecord;
 import io.github.jsenml.SenmlTextFormat;
-import io.github.jsenml.xml.SenmlXmlCodec;
 import io.swagger.v3.core.converter.AnnotatedType;
 import io.swagger.v3.core.converter.ModelConverter;
 import io.swagger.v3.core.converter.ModelConverterContext;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.media.XML;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,27 +55,25 @@ final class DefaultSenmlModelConverter implements SenmlModelConverter {
 
   private Schema<?> recordSchema() {
     Map<String, Schema> properties = new LinkedHashMap<>();
-    properties.put(SenmlTextFormat.BASE_NAME, field("string", "Base Name"));
-    properties.put(SenmlTextFormat.BASE_TIME, field("number", "Base Time"));
-    properties.put(SenmlTextFormat.BASE_UNIT, field("string", "Base Unit"));
-    properties.put(SenmlTextFormat.BASE_VALUE, field("number", "Base Value"));
-    properties.put(SenmlTextFormat.BASE_SUM, field("number", "Base Sum"));
-    properties.put(SenmlTextFormat.BASE_VERSION, field("integer", "Base Version"));
-    properties.put(SenmlTextFormat.NAME, field("string", "Name"));
-    properties.put(SenmlTextFormat.UNIT, field("string", "Unit"));
-    properties.put(SenmlTextFormat.TIME, field("number", "Time"));
-    properties.put(SenmlTextFormat.UPDATE_TIME, field("number", "Update Time"));
-    properties.put(SenmlTextFormat.VALUE, field("number", "Value"));
-    properties.put(SenmlTextFormat.STRING_VALUE, field("string", "String Value"));
-    properties.put(SenmlTextFormat.BOOLEAN_VALUE, field("boolean", "Boolean Value"));
-    properties.put(SenmlTextFormat.DATA_VALUE, field("string", "Data Value, base64url-encoded"));
-    properties.put(SenmlTextFormat.SUM, field("number", "Sum"));
+    properties.put(SenmlTextFormat.BASE_NAME, typed("string", "Base Name"));
+    properties.put(SenmlTextFormat.BASE_TIME, typed("number", "Base Time"));
+    properties.put(SenmlTextFormat.BASE_UNIT, typed("string", "Base Unit"));
+    properties.put(SenmlTextFormat.BASE_VALUE, typed("number", "Base Value"));
+    properties.put(SenmlTextFormat.BASE_SUM, typed("number", "Base Sum"));
+    properties.put(SenmlTextFormat.BASE_VERSION, typed("integer", "Base Version"));
+    properties.put(SenmlTextFormat.NAME, typed("string", "Name"));
+    properties.put(SenmlTextFormat.UNIT, typed("string", "Unit"));
+    properties.put(SenmlTextFormat.TIME, typed("number", "Time"));
+    properties.put(SenmlTextFormat.UPDATE_TIME, typed("number", "Update Time"));
+    properties.put(SenmlTextFormat.VALUE, typed("number", "Value"));
+    properties.put(SenmlTextFormat.STRING_VALUE, typed("string", "String Value"));
+    properties.put(SenmlTextFormat.BOOLEAN_VALUE, typed("boolean", "Boolean Value"));
+    properties.put(SenmlTextFormat.DATA_VALUE, typed("string", "Data Value, base64url-encoded"));
+    properties.put(SenmlTextFormat.SUM, typed("number", "Sum"));
     return typed(
             "object",
             "SenML Record, see RFC 8428, Section 4. Fields not defined by RFC 8428 are extensions.")
-        .properties(properties)
-        // no namespace, so that records in a pack take the default one of the enclosing element
-        .xml(new XML().name(SenmlXmlCodec.RECORD_ELEMENT));
+        .properties(properties);
   }
 
   private Schema<?> packSchema() {
@@ -92,17 +88,7 @@ final class DefaultSenmlModelConverter implements SenmlModelConverter {
     current.put(SenmlTextFormat.VALUE, 1.2);
     return typed("array", "SenML Pack, see RFC 8428, Section 4.")
         .items(reference(RECORD_SCHEMA_NAME))
-        .example(List.of(voltage, current))
-        .xml(
-            new XML()
-                .name(SenmlXmlCodec.PACK_ELEMENT)
-                .namespace(SenmlXmlCodec.NAMESPACE)
-                .wrapped(true));
-  }
-
-  /** Field of a record, an attribute in SenML XML representation, see RFC 8428, Section 7. */
-  private Schema<?> field(String type, String description) {
-    return typed(type, description).xml(new XML().attribute(true));
+        .example(List.of(voltage, current));
   }
 
   private Schema<?> typed(String type, String description) {

@@ -23,7 +23,6 @@ import io.github.jsenml.SenmlRecord;
 import io.github.jsenml.cbor.jackson.SenmlCborJacksonModule;
 import io.github.jsenml.json.jackson.SenmlJsonJacksonModule;
 import io.github.jsenml.spring.boot.autoconfigure.SenmlProperties;
-import io.github.jsenml.xml.jackson.SenmlXmlJacksonModule;
 import java.util.HexFormat;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.cbor.CBORMapper;
-import tools.jackson.dataformat.xml.XmlMapper;
 
 class SenmlJacksonAutoConfigurationTest {
 
@@ -206,85 +204,6 @@ class SenmlJacksonAutoConfigurationTest {
       @Bean
       SenmlCborMapperBuilderCustomizer senmlCborMapperBuilderCustomizerExt() {
         return new SenmlCborMapperBuilderCustomizerExt();
-      }
-    }
-  }
-
-  @Nested
-  class Xml {
-
-    private static final String XML =
-        "<sensml xmlns=\"urn:ietf:params:xml:ns:senml\">"
-            + "<senml n=\"urn:dev:ow:10e2073a01080063\" u=\"Cel\" v=\"23.1\"/>"
-            + "</sensml>";
-
-    @Test
-    void givenJacksonXmlOnClasspath_whenContextStarts_thenRegistersCustomizer() {
-      contextRunner.run(
-          context -> assertThat(context).hasSingleBean(SenmlXmlMapperBuilderCustomizer.class));
-    }
-
-    @Test
-    void givenJacksonXmlOnClasspath_whenContextStarts_thenXmlMapperUsesSenmlXml() {
-      contextRunner.run(
-          context -> {
-            XmlMapper mapper = context.getBean(XmlMapper.class);
-
-            assertThat(mapper.writeValueAsString(PACK)).isEqualTo(XML);
-            assertThat(mapper.readValue(XML, SenmlPack.class)).isEqualTo(PACK);
-          });
-    }
-
-    @Test
-    void givenUserDefinedCustomizer_whenContextStarts_thenBacksOff() {
-      contextRunner
-          .withUserConfiguration(CustomCustomizerConfiguration.class)
-          .run(
-              context -> {
-                assertThat(context).hasSingleBean(SenmlXmlMapperBuilderCustomizer.class);
-                assertThat(context.getBean(SenmlXmlMapperBuilderCustomizer.class))
-                    .isSameAs(context.getBean("senmlXmlMapperBuilderCustomizerExt"));
-              });
-    }
-
-    @Test
-    void givenJsenmlXmlJacksonNotOnClasspath_whenContextStarts_thenDoesNotRegisterCustomizer() {
-      contextRunner
-          .withClassLoader(new FilteredClassLoader(SenmlXmlJacksonModule.class))
-          .run(
-              context -> {
-                assertThat(context).hasNotFailed();
-                assertThat(context).doesNotHaveBean(SenmlXmlMapperBuilderCustomizer.class);
-                assertThat(context).hasSingleBean(XmlMapper.class);
-              });
-    }
-
-    @Test
-    void givenJacksonXmlNotOnClasspath_whenContextStarts_thenDoesNotRegisterCustomizer() {
-      contextRunner
-          .withClassLoader(new FilteredClassLoader(XmlMapper.class))
-          .run(
-              context -> {
-                assertThat(context).hasNotFailed();
-                assertThat(context).doesNotHaveBean(SenmlXmlMapperBuilderCustomizer.class);
-              });
-    }
-
-    @Test
-    void givenJsenmlDisabled_whenContextStarts_thenDoesNotRegisterCustomizer() {
-      contextRunner
-          .withPropertyValues(SenmlProperties.ENABLED_PROPERTY + "=false")
-          .run(
-              context ->
-                  assertThat(context).doesNotHaveBean(SenmlXmlMapperBuilderCustomizer.class));
-    }
-
-    @Configuration
-    static class CustomCustomizerConfiguration {
-
-      @Bean
-      SenmlXmlMapperBuilderCustomizer senmlXmlMapperBuilderCustomizerExt() {
-        return new SenmlXmlMapperBuilderCustomizerExt();
       }
     }
   }

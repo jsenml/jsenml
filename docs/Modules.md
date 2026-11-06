@@ -19,7 +19,6 @@ yourself.
   `SenmlJson` entry point.
 - `jsenml-cbor` (`io.github.jsenml.cbor`) - SenML CBOR: `SenmlCborCodec`, its SPI, integer labels (`SenmlCborFormat`)
   and the `SenmlCbor` entry point.
-- `jsenml-xml` (`io.github.jsenml.xml`) - SenML XML: `SenmlXmlCodec`, its SPI and the `SenmlXml` entry point.
 - `jsenml-kotlin` (`io.github.jsenml.kotlin`) - Kotlin DSL (`buildSenmlPack`), `SenmlRecord.copy`,
   `SenmlExtensions.copy` and conversions from collections and sequences. See [Kotlin](./Kotlin.md).
 
@@ -34,7 +33,6 @@ default when several backends are present.
 - `jsenml-json-jackson` (`io.github.jsenml.json.jackson`) - `JacksonSenmlJsonCodec` and `SenmlJsonJacksonModule`, also
   discovered by `findAndAddModules()`.
 - `jsenml-cbor-jackson` (`io.github.jsenml.cbor.jackson`) - `JacksonSenmlCborCodec` and `SenmlCborJacksonModule`.
-- `jsenml-xml-jackson` (`io.github.jsenml.xml.jackson`) - `JacksonSenmlXmlCodec` and `SenmlXmlJacksonModule`.
 
 ## Jackson 2
 
@@ -45,12 +43,11 @@ Backends on Jackson 2 (`com.fasterxml.jackson`) for applications not yet on Jack
 - `jsenml-json-jackson2` (`io.github.jsenml.json.jackson2`) - `JacksonSenmlJsonCodec` and `SenmlJsonJacksonModule`,
   also discovered by `findAndAddModules()`.
 - `jsenml-cbor-jackson2` (`io.github.jsenml.cbor.jackson2`) - `JacksonSenmlCborCodec` and `SenmlCborJacksonModule`.
-- `jsenml-xml-jackson2` (`io.github.jsenml.xml.jackson2`) - `JacksonSenmlXmlCodec` and `SenmlXmlJacksonModule`.
 
 ## Gson
 
 - `jsenml-json-gson` (`io.github.jsenml.json.gson`) - `GsonSenmlJsonCodec` and `SenmlTypeAdapterFactory`, registered
-  as provider `gson` with lower priority than the Jackson backends. Gson has no CBOR or XML support.
+  as provider `gson` with lower priority than the Jackson backends. Gson has no CBOR support.
 
 ## Spring Boot
 

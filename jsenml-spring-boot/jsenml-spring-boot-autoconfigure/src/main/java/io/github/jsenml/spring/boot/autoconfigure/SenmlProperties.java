@@ -31,7 +31,7 @@ public final class SenmlProperties {
   /** Name of the property enabling the {@code application/senml+cbor} HTTP message converter. */
   public static final String CONVERTER_CBOR_ENABLED_PROPERTY = PREFIX + ".converter.cbor.enabled";
 
-  /** Whether to register SenML support (JSON, CBOR, XML, OpenAPI schemas) in Spring Boot. */
+  /** Whether to register SenML support (JSON, CBOR, OpenAPI schemas) in Spring Boot. */
   private boolean enabled = true;
 
   /** HTTP message converters. */

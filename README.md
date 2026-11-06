@@ -3,7 +3,7 @@
 [![CI](https://github.com/jsenml/jsenml/actions/workflows/ci.yml/badge.svg)](https://github.com/jsenml/jsenml/actions/workflows/ci.yml)
 
 SenML ([RFC 8428](https://www.rfc-editor.org/rfc/rfc8428)) for Java 17+: an immutable model of SenML packs and
-records, JSON, CBOR and XML representations with Jackson 3, Jackson 2 and Gson backends, a Kotlin DSL and Spring Boot
+records, JSON and CBOR representations with Jackson 3, Jackson 2 and Gson backends, a Kotlin DSL and Spring Boot
 integration.
 
 Full documentation - modules, model, extensions, resolution, codecs, representations, Kotlin, Spring Boot and writing
@@ -38,7 +38,7 @@ String json = SenmlJson.toJson(pack);
 SenmlPack decoded = SenmlJson.fromJson(json);
 ```
 
-CBOR and XML work the same way with `SenmlCbor` and `SenmlXml`.
+CBOR works the same way with `SenmlCbor`.
 
 ## Resolve received packs
 

@@ -71,7 +71,7 @@ Builder rules:
 - Numeric setters accept any `Number`, converted to `double`: `Float` through its decimal representation (`23.1f`
   becomes `23.1`), other types with `Number.doubleValue()`, so `long` values beyond ±2^53 or `BigDecimal` values may
   lose precision. Infinite and NaN values are rejected with `IllegalArgumentException`.
-- `dataValue(String)` takes base64url text (padding optional), as carried in JSON and XML; `dataValue(byte[])` takes
+- `dataValue(String)` takes base64url text (padding optional), as carried in JSON; `dataValue(byte[])` takes
   octets and copies the array.
 - `extension(name, value)`, `removeExtension(name)` and `extensions(SenmlExtensions)` manage extensions.
 - Builders are mutable and not thread-safe; built records are immutable.

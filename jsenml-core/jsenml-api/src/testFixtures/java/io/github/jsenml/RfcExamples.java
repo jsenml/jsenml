@@ -411,20 +411,5 @@ public final class RfcExamples {
           SenmlRecord.builder().name("current").time(-1).value(1.6).build(),
           SenmlRecord.builder().name("current").time(0).value(1.7).build());
 
-  /** XML example of RFC 8428, Section 7, encoding {@link #MULTIPLE_DATA_POINTS_WITH_TIME}. */
-  public static final String MULTIPLE_DATA_POINTS_WITH_TIME_XML =
-      """
-      <sensml xmlns="urn:ietf:params:xml:ns:senml">
-        <senml bn="urn:dev:ow:10e2073a0108006:" bt="1.276020076001e+09"
-        bu="A" bver="5" n="voltage" u="V" v="120.1"></senml>
-        <senml n="current" t="-5" v="1.2"></senml>
-        <senml n="current" t="-4" v="1.3"></senml>
-        <senml n="current" t="-3" v="1.4"></senml>
-        <senml n="current" t="-2" v="1.5"></senml>
-        <senml n="current" t="-1" v="1.6"></senml>
-        <senml n="current" v="1.7"></senml>
-      </sensml>
-      """;
-
   private RfcExamples() {}
 }

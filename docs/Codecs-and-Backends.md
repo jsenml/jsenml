@@ -9,17 +9,16 @@ Static methods for the common cases, using the default codec of the representati
 
 - **JSON** (`jsenml-json`, `SenmlJson`): `toJson(pack)`, `toJsonBytes(pack)`, `fromJson(String)`, `fromJson(byte[])`.
 - **CBOR** (`jsenml-cbor`, `SenmlCbor`): `toCbor(pack)`, `fromCbor(byte[])`.
-- **XML** (`jsenml-xml`, `SenmlXml`): `toXml(pack)`, `toXmlBytes(pack)`, `fromXml(String)`, `fromXml(byte[])`.
 
 If no backend of the representation is on the classpath, they throw `SenmlException` naming the modules to add.
 Encoding and decoding failures throw `SenmlCodecException`.
 
 ## Codecs
 
-`SenmlJson.jsonCodec()`, `SenmlCbor.cborCodec()` and `SenmlXml.xmlCodec()` return the default codec, for streams and
+`SenmlJson.jsonCodec()` and `SenmlCbor.cborCodec()` return the default codec, for streams and
 repeated use. Codecs are thread-safe; keep one and reuse it.
 
-- `SenmlJsonCodec` and `SenmlXmlCodec`: `encode(pack)` to `String`, `encode(pack, Writer)`, `encodeToBytes(pack)`,
+- `SenmlJsonCodec`: `encode(pack)` to `String`, `encode(pack, Writer)`, `encodeToBytes(pack)`,
   `decode(String)`, `decode(Reader)`, `decode(byte[])`.
 - `SenmlCborCodec`: `encode(pack)` to `byte[]`, `encode(pack, OutputStream)`, `decode(byte[])`, `decode(InputStream)`.
 
@@ -31,8 +30,8 @@ try (Reader reader = Files.newBufferedReader(path)) {
 }
 ```
 
-Every codec type declares its media type as `MEDIA_TYPE` (`application/senml+json`, `application/senml+cbor`,
-`application/senml+xml`), e.g. for HTTP content negotiation.
+Every codec type declares its media type as `MEDIA_TYPE` (`application/senml+json`, `application/senml+cbor`), e.g. for
+HTTP content negotiation.
 
 ## Backend selection
 
@@ -60,7 +59,6 @@ directly. The given mapper is not modified - the SenML module is registered on a
 ```java
 SenmlJsonCodec jackson = new JacksonSenmlJsonCodec(myJsonMapper);
 SenmlCborCodec cbor = new JacksonSenmlCborCodec(myCborMapper);
-SenmlXmlCodec xml = new JacksonSenmlXmlCodec(myXmlMapper);
 SenmlJsonCodec gson = new GsonSenmlJsonCodec(myGson);
 ```
 
@@ -79,15 +77,10 @@ JsonMapper jsonMapper =
         .addModule(new SenmlJsonJacksonModule())
         .build();
 
-// CBOR and XML modules are not discovered by findAndAddModules(), register them on their mappers only
+// the CBOR module is not discovered by findAndAddModules(), register it on CBOR mappers only
 CBORMapper cborMapper =
     CBORMapper.builder()
         .addModule(new SenmlCborJacksonModule())
-        .build();
-
-XmlMapper xmlMapper =
-    XmlMapper.builder()
-        .addModule(new SenmlXmlJacksonModule())
         .build();
 
 Gson gson =
@@ -97,7 +90,7 @@ Gson gson =
 ```
 
 Only `SenmlJsonJacksonModule` is discovered by `findAndAddModules()`: each representation needs its own module on its
-own mapper, and a JSON module registered on a CBOR or XML mapper would write the wrong representation.
+own mapper, and a JSON module registered on a CBOR mapper would write the wrong representation.
 
 ## Spring Boot
 

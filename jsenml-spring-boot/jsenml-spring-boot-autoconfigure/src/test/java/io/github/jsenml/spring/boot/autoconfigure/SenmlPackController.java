@@ -19,7 +19,6 @@ package io.github.jsenml.spring.boot.autoconfigure;
 import io.github.jsenml.SenmlPack;
 import io.github.jsenml.cbor.SenmlCborCodec;
 import io.github.jsenml.json.SenmlJsonCodec;
-import io.github.jsenml.xml.SenmlXmlCodec;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +32,8 @@ public final class SenmlPackController {
 
   @PostMapping(
       path = PATH,
-      consumes = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE, SenmlXmlCodec.MEDIA_TYPE},
-      produces = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE, SenmlXmlCodec.MEDIA_TYPE})
+      consumes = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE},
+      produces = {SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE})
   SenmlPack echo(@RequestBody SenmlPack pack) {
     return pack;
   }

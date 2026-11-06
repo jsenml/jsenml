@@ -22,7 +22,6 @@ import io.github.jsenml.SenmlViolationException
 import io.github.jsenml.cbor.SenmlCborCodec
 import io.github.jsenml.json.SenmlJsonCodec
 import io.github.jsenml.kotlin.toSenmlPack
-import io.github.jsenml.xml.SenmlXmlCodec
 import io.swagger.v3.oas.annotations.Hidden
 import java.net.URI
 import kotlinx.coroutines.sync.Mutex
@@ -42,8 +41,6 @@ import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.cbor.JacksonCborDecoder
 import org.springframework.http.codec.cbor.JacksonCborEncoder
-import org.springframework.http.codec.xml.JacksonXmlDecoder
-import org.springframework.http.codec.xml.JacksonXmlEncoder
 import org.springframework.stereotype.Component
 import org.springframework.util.MimeType
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -57,24 +54,23 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import tools.jackson.dataformat.cbor.CBORMapper
-import tools.jackson.dataformat.xml.XmlMapper
 
 fun main(args: Array<String>) {
   runApplication<WebFluxApplication>(*args)
 }
 
-/** Example reactive application accepting SenML packs in JSON, CBOR and XML. */
+/** Example reactive application accepting SenML packs in JSON and CBOR. */
 @SpringBootApplication
 class WebFluxApplication {
 
   /**
-   * Reads and writes SenML CBOR and XML with Boot's [CBORMapper] and [XmlMapper], which have SenML
-   * support registered by jsenml autoconfiguration. Spring Boot passes its mapper to the JSON
-   * codecs only, which support `application/senml+json` as a `+json` media type, while the CBOR and
-   * XML codecs get new mappers, and the CBOR ones support `application/cbor` only.
+   * Reads and writes SenML CBOR with Boot's [CBORMapper], which has SenML support registered by
+   * jsenml autoconfiguration. Spring Boot passes its mapper to the JSON codecs only, which support
+   * `application/senml+json` as a `+json` media type, while the CBOR codecs get a new mapper and
+   * support `application/cbor` only.
    */
   @Bean
-  fun senmlCodecCustomizer(cborMapper: CBORMapper, xmlMapper: XmlMapper) = CodecCustomizer {
+  fun senmlCodecCustomizer(cborMapper: CBORMapper) = CodecCustomizer {
     val defaults = it.defaultCodecs()
     val senmlCbor = MediaType.parseMediaType(SenmlCborCodec.MEDIA_TYPE)
     defaults.jacksonCborDecoder(
@@ -83,8 +79,6 @@ class WebFluxApplication {
     defaults.jacksonCborEncoder(
         SingleValueCborEncoder(cborMapper, MediaType.APPLICATION_CBOR, senmlCbor),
     )
-    defaults.jacksonXmlDecoder(JacksonXmlDecoder(xmlMapper))
-    defaults.jacksonXmlEncoder(SingleValueXmlEncoder(xmlMapper))
   }
 }
 
@@ -95,26 +89,6 @@ class WebFluxApplication {
  */
 class SingleValueCborEncoder(mapper: CBORMapper, vararg mimeTypes: MimeType) :
     JacksonCborEncoder(mapper, *mimeTypes) {
-
-  override fun encode(
-      inputStream: Publisher<*>,
-      bufferFactory: DataBufferFactory,
-      elementType: ResolvableType,
-      mimeType: MimeType?,
-      hints: Map<String, Any>?,
-  ): Flux<DataBuffer> =
-      if (inputStream is Mono<*>) {
-        inputStream
-            .cast(Any::class.java)
-            .map { encodeValue(it, bufferFactory, elementType, mimeType, hints) }
-            .flux()
-      } else {
-        super.encode(inputStream, bufferFactory, elementType, mimeType, hints)
-      }
-}
-
-/** [JacksonXmlEncoder] counterpart of [SingleValueCborEncoder]. */
-class SingleValueXmlEncoder(mapper: XmlMapper) : JacksonXmlEncoder(mapper) {
 
   override fun encode(
       inputStream: Publisher<*>,
@@ -155,9 +129,9 @@ class SenmlStore {
 }
 
 /**
- * Accepts SenML packs in JSON, CBOR and XML, each with its own suspending handler, returns all
- * stored records in the format requested by `Accept` (SenML JSON by default), whatever format they
- * were received in, or clears them.
+ * Accepts SenML packs in JSON and CBOR, each with its own suspending handler, returns all stored
+ * records in the format requested by `Accept` (SenML JSON by default), whatever format they were
+ * received in, or clears them.
  */
 @RestController
 @RequestMapping("/packs")
@@ -173,12 +147,8 @@ class SenmlController(private val store: SenmlStore) {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   suspend fun addCbor(@RequestBody pack: SenmlPack) = add(pack, "CBOR")
 
-  @PostMapping(consumes = [SenmlXmlCodec.MEDIA_TYPE])
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  suspend fun addXml(@RequestBody pack: SenmlPack) = add(pack, "XML")
-
   @GetMapping(
-      produces = [SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE, SenmlXmlCodec.MEDIA_TYPE],
+      produces = [SenmlJsonCodec.MEDIA_TYPE, SenmlCborCodec.MEDIA_TYPE],
   )
   suspend fun all(): SenmlPack {
     val pack = store.all()

@@ -22,8 +22,6 @@ import io.github.jsenml.cbor.SenmlCborCodec
 import io.github.jsenml.json.SenmlJson
 import io.github.jsenml.json.SenmlJsonCodec
 import io.github.jsenml.kotlin.buildSenmlPack
-import io.github.jsenml.xml.SenmlXml
-import io.github.jsenml.xml.SenmlXmlCodec
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -100,7 +98,7 @@ data class ProducerOptions(
 
   companion object {
     const val USAGE =
-        "Usage: <json|cbor|xml> [--url=http://localhost:8080/packs] [--count=10] [--interval-ms=1000]"
+        "Usage: <json|cbor> [--url=http://localhost:8080/packs] [--count=10] [--interval-ms=1000]"
 
     /** Parses command line arguments: the format, followed by optional `--name=value` options. */
     fun parse(args: Array<String>): ProducerOptions {
@@ -127,8 +125,7 @@ data class ProducerOptions(
 /** SenML representation packs are sent in, with its media type and encoder. */
 enum class SenmlFormat(val mediaType: String, val encode: (SenmlPack) -> ByteArray) {
   JSON(SenmlJsonCodec.MEDIA_TYPE, SenmlJson::toJsonBytes),
-  CBOR(SenmlCborCodec.MEDIA_TYPE, SenmlCbor::toCbor),
-  XML(SenmlXmlCodec.MEDIA_TYPE, SenmlXml::toXmlBytes);
+  CBOR(SenmlCborCodec.MEDIA_TYPE, SenmlCbor::toCbor);
 
   companion object {
     /** Returns the format of given case-insensitive name, e.g. `json`. */

@@ -128,8 +128,8 @@ public sealed interface SenmlRecord permits DefaultSenmlRecord {
   @Nullable Boolean getBooleanValue();
 
   /**
-   * Returns the Data Value ({@code vd}): octets, carried as base64url text in JSON and XML and as a
-   * byte string in CBOR.
+   * Returns the Data Value ({@code vd}): octets, carried as base64url text in JSON and as a byte
+   * string in CBOR.
    *
    * @return copy of the data value or {@code null} if absent
    */

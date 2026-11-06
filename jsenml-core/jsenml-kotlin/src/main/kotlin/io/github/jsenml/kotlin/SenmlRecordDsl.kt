@@ -124,8 +124,7 @@ public sealed interface SenmlRecordDsl {
   public fun booleanValue(booleanValue: Boolean?)
 
   /**
-   * Sets the Data Value (`vd`) from base64url text, as carried in JSON and XML. Padding is
-   * optional.
+   * Sets the Data Value (`vd`) from base64url text, as carried in JSON. Padding is optional.
    *
    * @param dataValue base64url-encoded data value, or `null` to unset it
    * @throws IllegalArgumentException if [dataValue] is not valid base64url

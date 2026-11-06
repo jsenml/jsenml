@@ -29,8 +29,6 @@ import io.github.jsenml.spring.boot.autoconfigure.SenmlPackController;
 import io.github.jsenml.spring.boot.autoconfigure.SenmlProperties;
 import io.github.jsenml.spring.boot.autoconfigure.gson.SenmlGsonAutoConfiguration;
 import io.github.jsenml.spring.boot.autoconfigure.jackson.SenmlJacksonAutoConfiguration;
-import io.github.jsenml.xml.SenmlXml;
-import io.github.jsenml.xml.SenmlXmlCodec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -82,8 +80,7 @@ class SenmlHttpMessageConvertersAutoConfigurationTest {
   static Stream<Arguments> jacksonRepresentations() {
     return Stream.of(
         Arguments.of(SenmlJsonCodec.MEDIA_TYPE, SenmlJson.toJsonBytes(PACK)),
-        Arguments.of(SenmlCborCodec.MEDIA_TYPE, SenmlCbor.toCbor(PACK)),
-        Arguments.of(SenmlXmlCodec.MEDIA_TYPE, SenmlXml.toXmlBytes(PACK)));
+        Arguments.of(SenmlCborCodec.MEDIA_TYPE, SenmlCbor.toCbor(PACK)));
   }
 
   @ParameterizedTest

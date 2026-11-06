@@ -74,21 +74,6 @@ idea {
                     workingDirectory = rootProject.rootDir.absolutePath
                     packageName = "io.github.jsenml.cbor.jackson2"
                 }
-                create<JUnit>("JUnit [jsenml-xml]") {
-                    moduleName = "jsenml.jsenml-core.jsenml-xml.test"
-                    workingDirectory = rootProject.rootDir.absolutePath
-                    packageName = "io.github.jsenml.xml"
-                }
-                create<JUnit>("JUnit [jsenml-xml-jackson]") {
-                    moduleName = "jsenml.jsenml-jackson.jsenml-xml-jackson.test"
-                    workingDirectory = rootProject.rootDir.absolutePath
-                    packageName = "io.github.jsenml.xml.jackson"
-                }
-                create<JUnit>("JUnit [jsenml-xml-jackson2]") {
-                    moduleName = "jsenml.jsenml-jackson2.jsenml-xml-jackson2.test"
-                    workingDirectory = rootProject.rootDir.absolutePath
-                    packageName = "io.github.jsenml.xml.jackson2"
-                }
                 create<JUnit>("JUnit [jsenml-spring-boot-autoconfigure]") {
                     moduleName = "jsenml.jsenml-spring-boot.jsenml-spring-boot-autoconfigure.test"
                     workingDirectory = rootProject.rootDir.absolutePath

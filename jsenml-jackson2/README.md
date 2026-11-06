@@ -15,7 +15,3 @@ When both Jackson versions are on the classpath, Jackson 3 is the default; selec
 ## `jsenml-cbor-jackson2`
 
 `JacksonSenmlCborCodec` and `SenmlCborJacksonModule`, to register on CBOR mappers only.
-
-## `jsenml-xml-jackson2`
-
-`JacksonSenmlXmlCodec` and `SenmlXmlJacksonModule`, to register on XML mappers only.

@@ -64,6 +64,17 @@ wrapper.
 Library modules are signed and published to Maven Central with the nmcp plugin, aggregated in the root project.
 Examples are not published.
 
+## Architecture decisions
+
+Decisions not to do something that looks obvious, and why, are recorded in `docs/adr/`:
+
+- [1. Accept any Base Version in resolve][adr-1]
+- [2. Keep record order in resolve][adr-2]
+- [3. No XML and EXI representations][adr-3]
+
+Read them before proposing one of these changes; if a decision changes, add a new record instead of editing the old one.
+Differences from RFC 8428 are listed in [RFC Conformance](./RFC-Conformance.md), keep it up to date.
+
 ## Documentation
 
 - `README.md` - a short overview with a few minimal use cases.
@@ -77,3 +88,6 @@ wiki manually, as the wiki's Git repository exists only after that. Update the p
 they describe.
 
 [agents]: https://github.com/jsenml/jsenml/blob/main/AGENTS.md
+[adr-1]: https://github.com/jsenml/jsenml/blob/main/docs/adr/0001-accept-any-base-version.md
+[adr-2]: https://github.com/jsenml/jsenml/blob/main/docs/adr/0002-keep-record-order-in-resolve.md
+[adr-3]: https://github.com/jsenml/jsenml/blob/main/docs/adr/0003-no-xml-and-exi.md

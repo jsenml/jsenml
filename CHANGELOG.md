@@ -13,11 +13,9 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 - Add resolution of packs (`SenmlPack.resolve`) with validation of records (`SenmlViolationException`).
 - Add `jsenml-json` with `SenmlJson` entry point for SenML JSON (`application/senml+json`).
 - Add `jsenml-cbor` with `SenmlCbor` entry point for SenML CBOR (`application/senml+cbor`).
-- Add `jsenml-xml` with `SenmlXml` entry point for SenML XML (`application/senml+xml`).
 - Add discovery of codec backends via `java.util.ServiceLoader`, with a provider SPI per representation.
-- Add Jackson 3 backends - `jsenml-json-jackson`, `jsenml-cbor-jackson` and `jsenml-xml-jackson`, with Jackson modules.
-- Add Jackson 2 backends - `jsenml-json-jackson2`, `jsenml-cbor-jackson2` and `jsenml-xml-jackson2`, with Jackson
-  modules.
+- Add Jackson 3 backends - `jsenml-json-jackson` and `jsenml-cbor-jackson`, with Jackson modules.
+- Add Jackson 2 backends - `jsenml-json-jackson2` and `jsenml-cbor-jackson2`, with Jackson modules.
 - Add Gson backend - `jsenml-json-gson`, with `SenmlTypeAdapterFactory`.
 - Add `jsenml-kotlin` with Kotlin DSL for building packs and `copy` functions for records and extensions.
 - Add `jsenml-spring-boot-autoconfigure` with Spring Boot auto-configuration of Jackson mappers and Gson.

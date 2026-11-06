@@ -9,6 +9,7 @@
 - [Resolution](./Resolution.md)
 - [Codecs and Backends](./Codecs-and-Backends.md)
 - [Representations](./Representations.md)
+- [RFC Conformance](./RFC-Conformance.md)
 
 **Integrations**
 

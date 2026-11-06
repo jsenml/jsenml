@@ -1,7 +1,7 @@
 # JSenML
 
 SenML ([RFC 8428][rfc8428]) for Java 17+: an immutable, framework-agnostic model of SenML packs and records, with one
-module per representation - JSON, CBOR and XML - and pluggable backends (Jackson 3, Jackson 2, Gson) discovered via
+module per representation - JSON and CBOR - and pluggable backends (Jackson 3, Jackson 2, Gson) discovered via
 `java.util.ServiceLoader`. Kotlin DSL and Spring Boot integration included.
 
 > These pages live in the [`docs/`][docs-folder] folder of the repository and are published to the wiki on every push
@@ -18,7 +18,8 @@ module per representation - JSON, CBOR and XML - and pluggable backends (Jackson
 - [Resolution](./Resolution.md) - base fields, relative times, validation and violations.
 - [Codecs and Backends](./Codecs-and-Backends.md) - entry points, backend selection, own mappers, Jackson and Gson
   integration.
-- [Representations](./Representations.md) - JSON, CBOR and XML on the wire.
+- [Representations](./Representations.md) - JSON and CBOR on the wire.
+- [RFC Conformance](./RFC-Conformance.md) - where JSenML differs from RFC 8428.
 
 **Integrations**
 
@@ -34,7 +35,7 @@ module per representation - JSON, CBOR and XML - and pluggable backends (Jackson
 ## At a glance
 
 - **Java:** 17+, JPMS modules, JSpecify nullness annotations
-- **Representations:** `application/senml+json`, `application/senml+cbor`, `application/senml+xml`
+- **Representations:** `application/senml+json`, `application/senml+cbor`
 - **Backends:** Jackson 3 (`tools.jackson`), Jackson 2 (`com.fasterxml.jackson`), Gson (JSON only)
 - **Kotlin:** DSL for building packs, `copy` for records and extensions
 - **Spring Boot:** 4.x starter (Jackson 3, Gson optional), springdoc-openapi schemas

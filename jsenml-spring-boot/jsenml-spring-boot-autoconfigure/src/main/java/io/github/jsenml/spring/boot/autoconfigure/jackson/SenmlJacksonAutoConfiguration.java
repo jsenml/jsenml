@@ -19,7 +19,6 @@ package io.github.jsenml.spring.boot.autoconfigure.jackson;
 import io.github.jsenml.cbor.jackson.SenmlCborJacksonModule;
 import io.github.jsenml.json.jackson.SenmlJsonJacksonModule;
 import io.github.jsenml.spring.boot.autoconfigure.SenmlProperties;
-import io.github.jsenml.xml.jackson.SenmlXmlJacksonModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -27,12 +26,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jackson.autoconfigure.CborMapperBuilderCustomizer;
 import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer;
-import org.springframework.boot.jackson.autoconfigure.XmlMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.cbor.CBORMapper;
-import tools.jackson.dataformat.xml.XmlMapper;
 
 /**
  * Spring Boot autoconfiguration registering SenML support in Spring Boot's Jackson mappers. Active
@@ -41,11 +38,10 @@ import tools.jackson.dataformat.xml.XmlMapper;
  *
  * <ul>
  *   <li>SenML JSON in {@code JsonMapper} with {@code jsenml-json-jackson},
- *   <li>SenML CBOR in {@code CBORMapper} with {@code jsenml-cbor-jackson},
- *   <li>SenML XML in {@code XmlMapper} with {@code jsenml-xml-jackson}.
+ *   <li>SenML CBOR in {@code CBORMapper} with {@code jsenml-cbor-jackson}.
  * </ul>
  *
- * <p>Starters bring {@code jsenml-json-jackson} only, so CBOR and XML are opt-in.
+ * <p>Starters bring {@code jsenml-json-jackson} only, so CBOR is opt-in.
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SenmlProperties.class)
@@ -91,27 +87,6 @@ public final class SenmlJacksonAutoConfiguration {
     @ConditionalOnMissingBean(SenmlCborMapperBuilderCustomizer.class)
     SenmlCborMapperBuilderCustomizer senmlCborMapperBuilderCustomizer() {
       return cborMapperBuilder -> cborMapperBuilder.addModule(new SenmlCborJacksonModule());
-    }
-  }
-
-  @Configuration
-  @ConditionalOnClass({
-    XmlMapperBuilderCustomizer.class,
-    XmlMapper.class,
-    SenmlXmlJacksonModule.class
-  })
-  static class XmlConfiguration {
-
-    /**
-     * Creates a {@link SenmlXmlMapperBuilderCustomizer} registering the {@link
-     * SenmlXmlJacksonModule} in the XML mapper.
-     *
-     * @return a new {@code SenmlXmlMapperBuilderCustomizer} bean
-     */
-    @Bean
-    @ConditionalOnMissingBean(SenmlXmlMapperBuilderCustomizer.class)
-    SenmlXmlMapperBuilderCustomizer senmlXmlMapperBuilderCustomizer() {
-      return xmlMapperBuilder -> xmlMapperBuilder.addModule(new SenmlXmlJacksonModule());
     }
   }
 }

@@ -21,8 +21,7 @@ import org.jspecify.annotations.NullMarked;
  *
  * <p>Exports the SenML model ({@code SenmlPack}, {@code SenmlRecord}), SenML labels and the base
  * codec provider interface. Each representation lives in its own module with its own codec, SPI and
- * entry point ({@code io.github.jsenml.json}, {@code io.github.jsenml.cbor}, {@code
- * io.github.jsenml.xml}).
+ * entry point ({@code io.github.jsenml.json}, {@code io.github.jsenml.cbor}).
  *
  * @see <a href="https://www.rfc-editor.org/rfc/rfc8428">RFC 8428: Sensor Measurement Lists
  *     (SenML)</a>
@@ -34,6 +33,5 @@ module io.github.jsenml {
   exports io.github.jsenml;
   exports io.github.jsenml.internal to
       io.github.jsenml.json,
-      io.github.jsenml.cbor,
-      io.github.jsenml.xml;
+      io.github.jsenml.cbor;
 }

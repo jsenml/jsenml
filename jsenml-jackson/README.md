@@ -13,8 +13,3 @@ default when several backends are present. Each codec can be created with your o
 
 `JacksonSenmlCborCodec` and `SenmlCborJacksonModule`, writing registered labels as integer keys and the data value as a
 byte string. The module is not discovered by `findAndAddModules()`; register it on CBOR mappers only.
-
-## `jsenml-xml-jackson`
-
-`JacksonSenmlXmlCodec` and `SenmlXmlJacksonModule`, writing a `sensml` element in the SenML namespace with fields as
-attributes. The module is not discovered by `findAndAddModules()`; register it on XML mappers only.

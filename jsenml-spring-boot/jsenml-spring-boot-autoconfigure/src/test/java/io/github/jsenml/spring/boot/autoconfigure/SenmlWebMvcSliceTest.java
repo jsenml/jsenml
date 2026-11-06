@@ -24,8 +24,6 @@ import io.github.jsenml.cbor.SenmlCbor;
 import io.github.jsenml.cbor.SenmlCborCodec;
 import io.github.jsenml.json.SenmlJson;
 import io.github.jsenml.json.SenmlJsonCodec;
-import io.github.jsenml.xml.SenmlXml;
-import io.github.jsenml.xml.SenmlXmlCodec;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -54,8 +52,7 @@ class SenmlWebMvcSliceTest {
   static Stream<Arguments> representations() {
     return Stream.of(
         Arguments.of(SenmlJsonCodec.MEDIA_TYPE, SenmlJson.toJsonBytes(PACK)),
-        Arguments.of(SenmlCborCodec.MEDIA_TYPE, SenmlCbor.toCbor(PACK)),
-        Arguments.of(SenmlXmlCodec.MEDIA_TYPE, SenmlXml.toXmlBytes(PACK)));
+        Arguments.of(SenmlCborCodec.MEDIA_TYPE, SenmlCbor.toCbor(PACK)));
   }
 
   @ParameterizedTest

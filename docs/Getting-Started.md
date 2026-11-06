@@ -4,7 +4,7 @@
 
 All modules are published under the `io.github.jsenml` group. Import `jsenml-bom` to align their versions, then add a
 backend of every representation you need. A backend brings its API modules (`jsenml-api` and `jsenml-json`,
-`jsenml-cbor` or `jsenml-xml`) with it.
+or `jsenml-cbor`) with it.
 
 Gradle (Kotlin DSL):
 
@@ -49,9 +49,6 @@ Pick one backend per representation, matching the serialization library your app
 - **SenML CBOR:**
   - `jsenml-cbor-jackson` (Jackson 3);
   - `jsenml-cbor-jackson2` (Jackson 2).
-- **SenML XML:**
-  - `jsenml-xml-jackson` (Jackson 3);
-  - `jsenml-xml-jackson2` (Jackson 2).
 
 Add `jsenml-kotlin` for the Kotlin DSL, or `jsenml-spring-boot-starter` to integrate with Boot's mappers - see
 [Kotlin](./Kotlin.md) and [Spring Boot](./Spring-Boot.md). The full list is in [Modules](./Modules.md).
@@ -98,14 +95,11 @@ streams and your own mappers.
 
 ## Other representations
 
-CBOR and XML have their own entry points, available only when their modules are on the classpath:
+CBOR has its own entry point, available only when its module is on the classpath:
 
 ```java
 byte[] cbor = SenmlCbor.toCbor(pack);
 SenmlPack fromCbor = SenmlCbor.fromCbor(cbor);
-
-String xml = SenmlXml.toXml(pack);
-SenmlPack fromXml = SenmlXml.fromXml(xml);
 ```
 
 A representation whose module is missing cannot be used by mistake: its entry point does not compile.

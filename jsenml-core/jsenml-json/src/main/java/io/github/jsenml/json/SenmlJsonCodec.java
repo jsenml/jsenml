@@ -27,8 +27,8 @@ import java.nio.charset.StandardCharsets;
  * #MEDIA_TYPE}), as defined in <a href="https://www.rfc-editor.org/rfc/rfc8428#section-5">RFC 8428,
  * Section 5</a>.
  *
- * <p>This codec handles JSON only. Other SenML representations (e.g. CBOR, XML, EXI) are handled by
- * separate codec types with their own provider SPI.
+ * <p>This codec handles JSON only. Other SenML representations (e.g. CBOR) are handled by separate
+ * codec types with their own provider SPI.
  *
  * <p>Implementations are provided by backend modules (e.g. {@code jsenml-json-jackson}, {@code
  * jsenml-json-gson}) and discovered through {@link

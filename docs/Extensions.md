@@ -48,7 +48,7 @@ Read them by name and type:
 - `getString(name)`, `getNumber(name)`, `getBoolean(name)`, `getBytes(name)` - the value, or `null` if absent; an
   extension of another type throws `IllegalStateException`;
 - `get(name)` - the value as `Object` (`String`, `Double`, `Boolean` or a copy of the `byte[]`), when the type is not
-  known up front, e.g. after decoding XML;
+  known up front;
 - `names()`, `contains(name)`, `size()`, `isEmpty()`.
 
 `SenmlExtensions.empty()` is the shared empty set, `toBuilder()` derives a modified copy.
@@ -65,7 +65,6 @@ with:
 - **JSON:** strings, numbers and booleans keep their type; octets are written as base64url strings and come back as
   strings.
 - **CBOR:** every type round-trips, octets as byte strings.
-- **XML:** attributes carry no type, so every extension comes back as a string.
 
 ## Mandatory to understand
 
